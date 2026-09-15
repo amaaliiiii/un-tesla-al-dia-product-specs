@@ -1007,7 +1007,7 @@ function TopBar({ title, back = true }: { title: string; back?: boolean }) {
 }
 
 function TeslaVisual({ compact = false, winner = false }: { compact?: boolean; winner?: boolean }) {
-  const source = winner ? "/assets/figma/tesla-winner.png" : compact ? "/assets/figma/tesla-white-side.png" : "/assets/figma/tesla-black-front.png";
+  const source = winner ? "assets/figma/tesla-winner.png" : compact ? "assets/figma/tesla-white-side.png" : "assets/figma/tesla-black-front.png";
   return <div className={`tesla-visual ${compact ? "compact" : ""} ${winner ? "winner" : ""}`}>
     <img src={source} alt={winner ? "Tesla negro de frente" : compact ? "Tesla blanco de perfil" : "Tesla negro de frente"} />
     {!compact && !winner && <div className="blue-glow" />}
@@ -1098,14 +1098,14 @@ function StoresScreen({ next, props }: { next: () => void; props?: Step["props"]
   return <div className="screen white"><TopBar title="Tiendas participantes" />
     <div className="stores-intro"><TeslaVisual compact /><div><span>HOY</span><b>Gana boletos en estas tiendas</b><small>Pedido mínimo indicado en cada tienda</small></div></div>
     <div className="store-grid">{stores.map(([name, image]) => <button onClick={next} className="store-item is-hotspot" key={`${name}-${image}`}>
-      <div><img src={`/assets/figma/store-${image}.png`} alt={`Logo de ${name}`} /></div><b>{name}</b><small>Min: $80</small>
+      <div><img src={`assets/figma/store-${image}.png`} alt={`Logo de ${name}`} /></div><b>{name}</b><small>Min: $80</small>
     </button>)}</div>
   </div>;
 }
 
 function DrawVideo({ playing, onPlay, live, n }: { playing?: boolean; onPlay?: () => void; live?: boolean; n: number }) {
   return <button type="button" className={`res-vid${live ? " is-live" : ""}${playing ? " is-on" : ""} is-hotspot`} onClick={onPlay} aria-label={live ? "Abrir sorteo en YouTube" : "Replay del sorteo"}>
-    <img src="/assets/figma/live-video.png" alt="" width={live ? 258 : 186} height={live ? 133 : 96} />
+    <img src="assets/figma/live-video.png" alt="" width={live ? 258 : 186} height={live ? 133 : 96} />
     {!playing && <span className="res-vid-play" aria-hidden="true"><Play size={live ? 20 : 16} fill="currentColor" /></span>}
     <HotNum n={n} />
   </button>;
@@ -1113,24 +1113,24 @@ function DrawVideo({ playing, onPlay, live, n }: { playing?: boolean; onPlay?: (
 
 function YoutubePlayerScreen({ back }: { back: () => void }) {
   return <div className="yt-player">
-    <img className="yt-still" src="/assets/figma/youtube/still.png" alt="" width={375} height={812} />
+    <img className="yt-still" src="assets/figma/youtube/still.png" alt="" width={375} height={812} />
     <StatusBar />
     <div className="yt-top">
       <button type="button" className="yt-close is-hotspot" onClick={back} aria-label="Cerrar YouTube">
-        <img src="/assets/figma/youtube/close.svg" alt="" width={15} height={15} />
+        <img src="assets/figma/youtube/close.svg" alt="" width={15} height={15} />
         <HotNum n={1} />
       </button>
-      <img className="yt-pip" src="/assets/figma/youtube/pip.svg" alt="" width={24} height={19} />
-      <img className="yt-cast" src="/assets/figma/youtube/airplay.svg" alt="" width={20} height={18} />
-      <img className="yt-vol" src="/assets/figma/youtube/volume.svg" alt="" width={25} height={19} />
+      <img className="yt-pip" src="assets/figma/youtube/pip.svg" alt="" width={24} height={19} />
+      <img className="yt-cast" src="assets/figma/youtube/airplay.svg" alt="" width={20} height={18} />
+      <img className="yt-vol" src="assets/figma/youtube/volume.svg" alt="" width={25} height={19} />
     </div>
     <div className="yt-mid">
-      <img src="/assets/figma/youtube/rewind.svg" alt="" width={27} height={30} />
-      <img className="yt-pause" src="/assets/figma/youtube/pause.svg" alt="" width={32} height={38} />
-      <img src="/assets/figma/youtube/forward.svg" alt="" width={27} height={30} />
+      <img src="assets/figma/youtube/rewind.svg" alt="" width={27} height={30} />
+      <img className="yt-pause" src="assets/figma/youtube/pause.svg" alt="" width={32} height={38} />
+      <img src="assets/figma/youtube/forward.svg" alt="" width={27} height={30} />
     </div>
     <div className="yt-bot">
-      <img className="yt-more" src="/assets/figma/youtube/more.svg" alt="" width={19} height={19} />
+      <img className="yt-more" src="assets/figma/youtube/more.svg" alt="" width={19} height={19} />
       <div className="yt-bar" aria-hidden="true"><i /></div>
       <div className="yt-time"><span>0.01</span><span>-1.23</span></div>
     </div>
@@ -1150,7 +1150,7 @@ function ResultsScreen({ next, delivered }: { next: () => void; delivered?: bool
 }
 
 function DeliveryScreen({ next }: { next: () => void }) {
-  return <div className="screen tracking"><StatusBar /><div className="fake-map asset-map"><img src="/assets/figma/delivery-map.png" alt="Mapa del pedido entregado" /><div className="route" /><div className="courier">🛵</div><MapPin className="destination" /></div>
+  return <div className="screen tracking"><StatusBar /><div className="fake-map asset-map"><img src="assets/figma/delivery-map.png" alt="Mapa del pedido entregado" /><div className="route" /><div className="courier">🛵</div><MapPin className="destination" /></div>
     <div className="tracking-card"><b>Tu pedido fue entregado</b><small>Gracias por pedir con Rappi</small></div>
     <div className="sheet"><span className="handle" /><TeslaVisual compact /><h1>¡Ganaste 1 boleto!</h1><p>Para el sorteo de mañana</p><PrimaryButton onClick={next}>Ver mi boleto</PrimaryButton></div>
   </div>;
@@ -1204,12 +1204,12 @@ function CancelledScreen({ next }: { next: () => void }) {
   return (
     <div className="screen cancelled">
       <div className="can-page" aria-hidden="true">
-        <img className="can-page-x" src="/assets/figma/cancel/page-close.svg" alt="" width={32} height={32} />
+        <img className="can-page-x" src="assets/figma/cancel/page-close.svg" alt="" width={32} height={32} />
         <h1>Pedido cancelado</h1>
         <p className="can-page-lead">
           ¡Hola Ivan!, revisé tu solicitud y la cancelación de tu pedido fue debido a que <b>hemos tenido un problema técnico dentro de nuestro sistema. ¡ Lo sentimos!</b>
         </p>
-        <img className="can-page-bag" src="/assets/figma/cancel/bag.png" alt="" width={80} height={80} />
+        <img className="can-page-bag" src="assets/figma/cancel/bag.png" alt="" width={80} height={80} />
         <p className="can-page-charge">Aplicamos un cargo que cubre los gastos del estado actual de tu pedido. En caso de haber una diferencia haremos el reembolso en tu método seleccionado.</p>
         <div className="can-page-total"><span>Cargo total</span><strong>$115</strong></div>
         <p className="can-page-pay">Aplicamos el cobro en tu método de pago.</p>
@@ -1220,18 +1220,18 @@ function CancelledScreen({ next }: { next: () => void }) {
       <div className="can-sheet">
         <i className="can-grab" />
         <div className="can-head">
-          <img className="can-avatar" src="/assets/figma/cancel/avatar.png" alt="" width={32} height={32} />
+          <img className="can-avatar" src="assets/figma/cancel/avatar.png" alt="" width={32} height={32} />
           <p className="can-store">Starbucks</p>
           <h2>Pedido cancelado</h2>
           <button type="button" className="can-close" onClick={next} aria-label="Cerrar">
-            <img src="/assets/figma/store/close.svg" alt="" width={24} height={24} />
+            <img src="assets/figma/store/close.svg" alt="" width={24} height={24} />
           </button>
         </div>
         <div className="can-body">
-          <img className="can-word" src="/assets/figma/cancel/tesla-word.svg" alt="TESLA" width={65} height={8} />
+          <img className="can-word" src="assets/figma/cancel/tesla-word.svg" alt="TESLA" width={65} height={8} />
           <p className="can-alert">No recibirás un boleto para el sorteo con este pedido.</p>
           <div className="can-car">
-            <img src="/assets/figma/cancel/tesla.png" alt="" width={153} height={86} />
+            <img src="assets/figma/cancel/tesla.png" alt="" width={153} height={86} />
           </div>
           <p className="can-sub">Solo recibirás boletos cuando tus pedidos sean entregados.</p>
           <button type="button" className="can-ok is-hotspot" onClick={next}>Entendido<HotNum n={1} /></button>
@@ -1319,7 +1319,7 @@ function LiveTickets({ extraTicket }: { extraTicket?: TicketInfo | null }) {
     {[{ code: extraTicket?.code || "5321-A" }, { code: "1231-Z" }, { extra: "+6" }].map(t => (
       <span className="rh-mini-tix" key={t.code || t.extra}>
         <span className="rh-mini-card" aria-hidden="true">
-          <img src="/assets/figma/home/mini-tix.svg" alt="" width={68} height={94} />
+          <img src="assets/figma/home/mini-tix.svg" alt="" width={68} height={94} />
         </span>
         {t.code ? <><small>Boleto N°</small><strong>{t.code}</strong></> : <><strong className="plus">{t.extra}</strong><em>Boletos</em></>}
       </span>
@@ -1329,20 +1329,20 @@ function LiveTickets({ extraTicket }: { extraTicket?: TicketInfo | null }) {
 
 function LiveWatchCta() {
   return <span className="rh-cta live">
-    <img src="/assets/figma/home/ico-video.svg" alt="" width={16} height={16} />
+    <img src="assets/figma/home/ico-video.svg" alt="" width={16} height={16} />
     <span>Ver sorteo en VIVO</span>
-    <img src="/assets/figma/home/ico-live-dot.svg" alt="" width={16} height={16} />
+    <img src="assets/figma/home/ico-live-dot.svg" alt="" width={16} height={16} />
   </span>;
 }
 
 function WinnerBannerArt() {
   return <>
-    <img className="rh-win-car" src="/assets/figma/home/winner-car.png" alt="" width={396} height={224} />
-    <img className="rh-win-confetti" src="/assets/figma/home/winner-confetti.svg" alt="" width={510} height={445} />
+    <img className="rh-win-car" src="assets/figma/home/winner-car.png" alt="" width={396} height={224} />
+    <img className="rh-win-confetti" src="assets/figma/home/winner-confetti.svg" alt="" width={510} height={445} />
     <b>¡Ganaste el Tesla del Sorteo N°5!</b>
     <span className="rh-win-tix">
       <span className="rh-win-tix-rot" aria-hidden="true">
-        <img src="/assets/figma/home/winner-tix.svg" alt="" width={60} height={144} />
+        <img src="assets/figma/home/winner-tix.svg" alt="" width={60} height={144} />
       </span>
       <strong>3321-H</strong>
     </span>
@@ -1353,11 +1353,11 @@ function WinnerBannerArt() {
 function ResultsWinTicket() {
   return <span className="rh-res-tix" aria-hidden="true">
     <span className="rh-res-tix-rot">
-      <img src="/assets/figma/home/results-tix.svg" alt="" width={105} height={198} />
+      <img src="assets/figma/home/results-tix.svg" alt="" width={105} height={198} />
     </span>
-    <img className="rh-res-tix-word" src="/assets/figma/home/tesla-word.svg" alt="" width={59} height={10} />
-    <img className="rh-res-tix-star left" src="/assets/figma/home/results-star.svg" alt="" width={12} height={12} />
-    <img className="rh-res-tix-star right" src="/assets/figma/home/results-star.svg" alt="" width={12} height={12} />
+    <img className="rh-res-tix-word" src="assets/figma/home/tesla-word.svg" alt="" width={59} height={10} />
+    <img className="rh-res-tix-star left" src="assets/figma/home/results-star.svg" alt="" width={12} height={12} />
+    <img className="rh-res-tix-star right" src="assets/figma/home/results-star.svg" alt="" width={12} height={12} />
     <strong>5312-*</strong>
     <em>Boleto ganador Tesla</em>
   </span>;
@@ -1384,8 +1384,8 @@ function HomeBannerFace({ variant, extraTicket, tickets, size, liveTimer, hot = 
       </> : variant === "noCoverage" || variant === "noStores" ? <>
         <p className="rh-empty-msg">Aún no hay tiendas para ganar boletos en esta dirección</p>
         <div className="rh-car-clip">
-          <img className="rh-car" src="/assets/figma/home/nocov-tesla.png" alt="" width={183} height={103} />
-          <img className="rh-word" src="/assets/figma/home/nocov-word.svg" alt="" width={43} height={6} />
+          <img className="rh-car" src="assets/figma/home/nocov-tesla.png" alt="" width={183} height={103} />
+          <img className="rh-word" src="assets/figma/home/nocov-word.svg" alt="" width={43} height={6} />
         </div>
       </> : variant === "soldOut" ? <>
         <small>Próximo sorteo cierra en:</small>
@@ -1412,7 +1412,7 @@ function HomeBannerFace({ variant, extraTicket, tickets, size, liveTimer, hot = 
         {[{ code: extraTicket?.code || "5321-A" }, { code: "1231-Z" }, { extra: "+6" }].map(t => (
           <span className="rh-mini-tix" key={t.code || t.extra}>
             <span className="rh-mini-card" aria-hidden="true">
-              <img src="/assets/figma/home/mini-tix.svg" alt="" width={68} height={94} />
+              <img src="assets/figma/home/mini-tix.svg" alt="" width={68} height={94} />
             </span>
             {t.code ? <><small>Boleto N°</small><strong>{t.code}</strong></> : <><strong className="plus">{t.extra}</strong><em>Boletos</em></>}
           </span>
@@ -1431,7 +1431,7 @@ function HomeBannerFace({ variant, extraTicket, tickets, size, liveTimer, hot = 
         {[{ code: extraTicket?.code || "5321-A" }, { code: "1231-Z" }, { extra: "+6" }].map(t => (
           <span className="rh-mini-tix" key={t.code || t.extra}>
             <span className="rh-mini-card" aria-hidden="true">
-              <img src="/assets/figma/home/mini-tix.svg" alt="" width={68} height={94} />
+              <img src="assets/figma/home/mini-tix.svg" alt="" width={68} height={94} />
             </span>
             {t.code ? <><small>Boleto N°</small><strong>{t.code}</strong></> : <><strong className="plus">{t.extra}</strong><em>Boletos</em></>}
           </span>
@@ -1481,8 +1481,8 @@ function HomeBannerFace({ variant, extraTicket, tickets, size, liveTimer, hot = 
       <em className="rh-soon">Próximamente</em>
       <p className="rh-empty-msg">Aún no hay tiendas para ganar boletos en esta dirección</p>
       <div className="rh-car-clip">
-        <img className="rh-car" src="/assets/figma/home/nocov-tesla.png" alt="" width={183} height={103} />
-        <img className="rh-word" src="/assets/figma/home/nocov-word.svg" alt="" width={43} height={6} />
+        <img className="rh-car" src="assets/figma/home/nocov-tesla.png" alt="" width={183} height={103} />
+        <img className="rh-word" src="assets/figma/home/nocov-word.svg" alt="" width={43} height={6} />
       </div>
       <HotNum n={1} />
     </button>;
@@ -1494,8 +1494,8 @@ function HomeBannerFace({ variant, extraTicket, tickets, size, liveTimer, hot = 
       <p className="rh-empty-msg">Los sorteos han terminado.</p>
       <span className="rh-cta mid">Ver resultados<ChevronRight size={14} /></span>
       <div className="rh-car-clip">
-        <img className="rh-car" src="/assets/figma/home/tesla-a.png" alt="" />
-        <img className="rh-word" src="/assets/figma/home/tesla-word.svg" alt="" />
+        <img className="rh-car" src="assets/figma/home/tesla-a.png" alt="" />
+        <img className="rh-word" src="assets/figma/home/tesla-word.svg" alt="" />
       </div>
       <HotNum n={1} />
     </button>;
@@ -1508,8 +1508,8 @@ function HomeBannerFace({ variant, extraTicket, tickets, size, liveTimer, hot = 
       <BannerClock />
       <span className="rh-sold-bar">Se terminaron los boletos para el sorteo de hoy</span>
       <div className="rh-car-clip">
-        <img className="rh-car" src="/assets/figma/home/tesla-a.png" alt="" />
-        <img className="rh-word" src="/assets/figma/home/tesla-word.svg" alt="" />
+        <img className="rh-car" src="assets/figma/home/tesla-a.png" alt="" />
+        <img className="rh-word" src="assets/figma/home/tesla-word.svg" alt="" />
       </div>
       <HotNum n={1} />
     </button>;
@@ -1522,8 +1522,8 @@ function HomeBannerFace({ variant, extraTicket, tickets, size, liveTimer, hot = 
     <BannerClock />
     <span className={liveTimer ? "rh-cta wide" : "rh-cta mid"}>{cta}<ChevronRight size={14} /></span>
     <div className="rh-car-clip">
-      <img className="rh-car" src="/assets/figma/home/tesla-a.png" alt="" />
-      <img className="rh-word" src="/assets/figma/home/tesla-word.svg" alt="" />
+      <img className="rh-car" src="assets/figma/home/tesla-a.png" alt="" />
+      <img className="rh-word" src="assets/figma/home/tesla-word.svg" alt="" />
     </div>
     <HotNum n={hot} />
   </button>;
@@ -1574,25 +1574,25 @@ function HomeRappiScreen({ next, variant = "default", size = "large", onRestaura
       {carousel ? <div className={`rh-dots${cardCount === 3 ? " is-3" : ""}`}>{Array.from({ length: cardCount }, (_, i) => <i key={i} className={page === i ? "on" : ""} />)}</div> : null}
     </div>
     <div className="rh-cats">
-      <button className={`rh-cat rest${hideExplore ? "" : " is-hotspot"}`} onClick={hideExplore ? undefined : onRestaurants}><img src="/assets/figma/home/burger.png" alt="" /><div className="rh-cat-txt"><b>Restaurantes</b><small>15 min</small></div>{hideExplore ? null : <HotNum n={restN} />}</button>
-      <div className="rh-cat turbo"><img src="/assets/figma/home/bag.png" alt="" /><div className="rh-cat-txt"><b>Turbo</b><small>10 min</small></div></div>
-      <div className="rh-cat merc"><img src="/assets/figma/home/bananas.png" alt="" /><div className="rh-cat-txt"><b>Mercado</b><small>45 min</small></div></div>
+      <button className={`rh-cat rest${hideExplore ? "" : " is-hotspot"}`} onClick={hideExplore ? undefined : onRestaurants}><img src="assets/figma/home/burger.png" alt="" /><div className="rh-cat-txt"><b>Restaurantes</b><small>15 min</small></div>{hideExplore ? null : <HotNum n={restN} />}</button>
+      <div className="rh-cat turbo"><img src="assets/figma/home/bag.png" alt="" /><div className="rh-cat-txt"><b>Turbo</b><small>10 min</small></div></div>
+      <div className="rh-cat merc"><img src="assets/figma/home/bananas.png" alt="" /><div className="rh-cat-txt"><b>Mercado</b><small>45 min</small></div></div>
     </div>
     <div className="rh-chips">
       {([["taco", "Tacos"], ["bowl", "Saludable"], ["sushi", "Sushi"], ["popcorn", "Rápida"]] as const).map(([img, name]) =>
-        <span className="rh-chip" key={name}><img src={`/assets/figma/home/${img}.png`} alt="" />{name}</span>)}
+        <span className="rh-chip" key={name}><img src={`assets/figma/home/${img}.png`} alt="" />{name}</span>)}
     </div>
     <div className="rh-pay">
-      <button><img className="rh-3d" src="/assets/figma/home/card3d.png" alt="" /><img className="rh-logo" src="/assets/figma/home/rappicard.svg" alt="RappiCard" /><ChevronRight size={14} color="#919aaa" /></button>
+      <button><img className="rh-3d" src="assets/figma/home/card3d.png" alt="" /><img className="rh-logo" src="assets/figma/home/rappicard.svg" alt="RappiCard" /><ChevronRight size={14} color="#919aaa" /></button>
       <i />
-      <button><img className="rh-3d" src="/assets/figma/home/cuentacard.png" alt="" /><img className="rh-logo wide" src="/assets/figma/home/rappicuenta.svg" alt="RappiCuenta" /><ChevronRight size={14} color="#919aaa" /></button>
+      <button><img className="rh-3d" src="assets/figma/home/cuentacard.png" alt="" /><img className="rh-logo wide" src="assets/figma/home/rappicuenta.svg" alt="RappiCuenta" /><ChevronRight size={14} color="#919aaa" /></button>
     </div>
     <div className="rh-reorder">
       <div className="rh-reorder-h"><b>Cómpralo de nuevo Simón</b><ChevronRight size={16} color="#919aaa" /></div>
       <div className="rh-stores">
         <div className="rh-store">
           <span className="rh-store-photo">
-            <img src="/assets/figma/home/sbux.png" alt="Starbucks Turbo" />
+            <img src="assets/figma/home/sbux.png" alt="Starbucks Turbo" />
             {storeTags ? <TeslaTag /> : null}
           </span>
           <b>Starbucks Turbo</b>
@@ -1600,7 +1600,7 @@ function HomeRappiScreen({ next, variant = "default", size = "large", onRestaura
         </div>
         <div className="rh-store peek">
           <span className="rh-store-photo">
-            <img src="/assets/figma/home/pumpkin.png" alt="Mora Mora Turbo" />
+            <img src="assets/figma/home/pumpkin.png" alt="Mora Mora Turbo" />
             {storeTags ? <TeslaTag /> : null}
           </span>
           <b>Mora Mora Turbo</b>
@@ -1609,8 +1609,8 @@ function HomeRappiScreen({ next, variant = "default", size = "large", onRestaura
       </div>
     </div>
     <div className="rh-dock">
-      <button className={`rh-search${hideExplore ? "" : " is-hotspot"}`} onClick={hideExplore ? undefined : onSearch}><img src="/assets/figma/home/search.svg" alt="" /><span>¿Que quieres hoy?</span>{hideExplore ? null : <HotNum n={searchN} />}</button>
-      <button className="rh-mic" aria-label="Voz"><img src="/assets/figma/home/mic-ring.svg" alt="" /><img className="rh-mic-ico" src="/assets/figma/home/mic.svg" alt="" /></button>
+      <button className={`rh-search${hideExplore ? "" : " is-hotspot"}`} onClick={hideExplore ? undefined : onSearch}><img src="assets/figma/home/search.svg" alt="" /><span>¿Que quieres hoy?</span>{hideExplore ? null : <HotNum n={searchN} />}</button>
+      <button className="rh-mic" aria-label="Voz"><img src="assets/figma/home/mic-ring.svg" alt="" /><img className="rh-mic-ico" src="assets/figma/home/mic.svg" alt="" /></button>
     </div>
   </div>;
 }
@@ -1620,15 +1620,15 @@ function WinnerInappScreen({ onClose }: { onClose: () => void }) {
     <StatusBar />
     <div className="win-inapp-glow" aria-hidden="true" />
     <button type="button" className="win-inapp-close is-hotspot" onClick={onClose} aria-label="Cerrar">
-      <img src="/assets/figma/store/close.svg" alt="" width={24} height={24} />
+      <img src="assets/figma/store/close.svg" alt="" width={24} height={24} />
       <HotNum n={1} />
     </button>
-    <img className="win-inapp-car" src="/assets/figma/home/winner-inapp-car.png" alt="" width={701} height={382} />
-    <img className="win-inapp-word" src="/assets/figma/home/winner-inapp-word.svg" alt="TESLA" width={104} height={14} />
+    <img className="win-inapp-car" src="assets/figma/home/winner-inapp-car.png" alt="" width={701} height={382} />
+    <img className="win-inapp-word" src="assets/figma/home/winner-inapp-word.svg" alt="TESLA" width={104} height={14} />
     <h1><span>GANASTE</span><span>EL TESLA</span></h1>
     <p className="win-inapp-sub">Tu boleto <b>3322-H</b> ganó en el<br />Sorteo N°5 · 17 Agosto</p>
     <div className="win-inapp-keys">
-      <img src="/assets/figma/home/winner-keys.png" alt="" width={40} height={40} />
+      <img src="assets/figma/home/winner-keys.png" alt="" width={40} height={40} />
       <div>
         <b>Ya estamos alistando tus llaves</b>
         <small>El equipo de Rappi te contactará en las para darte más detalles.</small>
@@ -1644,8 +1644,8 @@ function IntroScreen({ onKnowMore, onGotIt, openLegal }: { onKnowMore: () => voi
   return <div className="screen intro2"><StatusBar />
     <div className="intro2-body">
       <h1 className="intro2-title">Un Tesla al día.<br />Todos los días.<br />Por el resto del año.</h1>
-      <img className="intro2-car" src="/assets/figma/tesla-white-side.png" alt="Tesla Model Y" />
-      <img className="intro2-word" src="/assets/figma/tesla-wordmark.svg" alt="TESLA" />
+      <img className="intro2-car" src="assets/figma/tesla-white-side.png" alt="Tesla Model Y" />
+      <img className="intro2-word" src="assets/figma/tesla-wordmark.svg" alt="TESLA" />
       <p className="intro2-label">Próximo sorteo cierra en:</p>
       <CountdownBoxes />
       <button className="intro2-bases" onClick={openLegal}>Consulta las bases</button>
@@ -1675,9 +1675,9 @@ const hubRows: HubStore[][] = [
 function HubStoreCard({ name, photo, brand, turbo, n, hot = true, onOpen }: HubStore & { n: number; hot?: boolean; onOpen?: () => void }) {
   return <button className={`chub-card${hot ? " is-hotspot" : ""}`} onClick={onOpen}>
     <div className={`chub-photo${brand ? " is-logo" : ""}`}>
-      <img src={`/assets/figma/${photo}`} alt="" />
-      {turbo && <span className="chub-turbo"><img src="/assets/figma/stores/turbo.svg" alt="" /></span>}
-      <span className="chub-tag"><span className="chub-tag-label">BOLETO TESLA</span><i className="chub-tag-car"><img src="/assets/figma/home/tesla-a.png" alt="" /></i></span>
+      <img src={`assets/figma/${photo}`} alt="" />
+      {turbo && <span className="chub-turbo"><img src="assets/figma/stores/turbo.svg" alt="" /></span>}
+      <span className="chub-tag"><span className="chub-tag-label">BOLETO TESLA</span><i className="chub-tag-car"><img src="assets/figma/home/tesla-a.png" alt="" /></i></span>
     </div>
     <b>{name}</b>
     <small>Min: $80</small>
@@ -1704,7 +1704,7 @@ const hubTickets = hubTicketsManana;
 
 function TicketsEmpty({ onCta, n, hot = true }: { onCta: () => void; n?: number; hot?: boolean }) {
   return <div className="tix-empty">
-    <img src="/assets/figma/empty-ticket.svg" alt="" width={48} height={48} />
+    <img src="assets/figma/empty-ticket.svg" alt="" width={48} height={48} />
     <div className="tix-empty-copy">
       <b>Aún no tienes boletos para este sorteo</b>
       <small>Todavía tienes tiempo para ganar boletos y participar por el Tesla</small>
@@ -1716,7 +1716,7 @@ function TicketsEmpty({ onCta, n, hot = true }: { onCta: () => void; n?: number;
 function TeslaTicket({ code, store, n, sorteo = "Sorteo N°6", onClick, gold, label, hot = true }: { code: string; store: string; n?: number; sorteo?: string; onClick?: (t: TicketInfo) => void; gold?: boolean; label?: string; hot?: boolean }) {
   return <button className={`tesla-tix${gold ? " gold" : ""}${onClick && hot ? " is-hotspot" : ""}`} onClick={() => onClick?.({ code, store, sorteo })}>
     <span className="tix-label">{label ?? "Boleto N°"}</span>
-    <img className="tix-word" src="/assets/figma/tesla-wordmark.svg" alt="" />
+    <img className="tix-word" src="assets/figma/tesla-wordmark.svg" alt="" />
     <strong>{code}</strong>
     <em>{store}</em>
     <small>{sorteo}</small>
@@ -1728,11 +1728,11 @@ function TicketCardShell({ children }: { children: React.ReactNode }) {
   return <>
     <div className="td-card-rot" aria-hidden="true">
       <span className="td-card-shadow">
-        <img className="td-card-img" src="/assets/figma/ticket/card.svg" alt="" />
+        <img className="td-card-img" src="assets/figma/ticket/card.svg" alt="" />
       </span>
     </div>
     {children}
-    <img className="td-dash" src="/assets/figma/ticket/dash.svg" alt="" />
+    <img className="td-dash" src="assets/figma/ticket/dash.svg" alt="" />
   </>;
 }
 
@@ -1742,7 +1742,7 @@ function TicketDetailSheet({ ticket, onClose, openLegal }: { ticket: TicketInfo;
     <div className="tix-detail-dim" />
     <div className="tix-detail-sheet" onClick={e => e.stopPropagation()}>
       <button className="tix-detail-close is-hotspot" onClick={onClose} aria-label="Cerrar">
-        <img src="/assets/figma/ticket/close.svg" alt="" width={24} height={24} />
+        <img src="assets/figma/ticket/close.svg" alt="" width={24} height={24} />
         <HotNum n={1} />
       </button>
       <div className={`tix-flip${flipped ? " is-flipped" : ""}`}>
@@ -1759,7 +1759,7 @@ function TicketDetailSheet({ ticket, onClose, openLegal }: { ticket: TicketInfo;
                 <strong>{ticket.code}</strong>
               </div>
               <span className="td-word-wrap">
-                <img className="td-word" src="/assets/figma/ticket/wordmark.png" alt="TESLA" />
+                <img className="td-word" src="assets/figma/ticket/wordmark.png" alt="TESLA" />
               </span>
               <em>{ticket.sorteo ?? "Sorteo N°[XX]"}</em>
               <p className="td-legal">
@@ -1770,7 +1770,7 @@ function TicketDetailSheet({ ticket, onClose, openLegal }: { ticket: TicketInfo;
           <div className="tix-face tix-face-back">
             <TicketCardShell>
               <span className="td-word-back">
-                <img src="/assets/figma/ticket/wordmark.png" alt="TESLA" />
+                <img src="assets/figma/ticket/wordmark.png" alt="TESLA" />
               </span>
               <span className="td-details-label">Detalles del boleto:</span>
               <p className="td-legal td-legal-back">
@@ -1839,7 +1839,7 @@ function CampaignHubScreen({ next, prev, openStores, openTickets, openTicket, op
         <button className={`back${noF ? " is-hotspot" : ""}`} onClick={prev} aria-label="Atrás"><ChevronLeft size={18} />{noF && <HotNum n={1} />}</button>
         <button className={`chub-how${noF ? " is-hotspot" : ""}`} onClick={next}>¿Cómo funciona?{noF && <HotNum n={2} />}</button>
       </div>
-      <div className="chub-carwrap"><img className="chub-car" src="/assets/figma/hub-tesla-front.png" alt="Tesla Model Y" /></div>
+      <div className="chub-carwrap"><img className="chub-car" src="assets/figma/hub-tesla-front.png" alt="Tesla Model Y" /></div>
       <h1 className="chub-title">Un Tesla al día. Todos los días. Por el resto del año.</h1>
       {!ended && <p className="chub-label">{countdownLabel}</p>}
       {!ended && <CountdownBoxes dark />}
@@ -1855,11 +1855,11 @@ function CampaignHubScreen({ next, prev, openStores, openTickets, openTicket, op
       </>}
     </div>
     <div className="chub-sheet">
-      <button className={`chub-results${hotRes ? " is-hotspot" : ""}`} onClick={openResults}><img src="/assets/figma/tesla-white-side.png" alt="" /><div><b>Ver resultados y sorteos anteriores</b><small>{resultsSub}</small></div><ChevronRight size={18} color="#919aaa" />{hotRes && <HotNum n={noF ? 4 : 1} />}</button>
+      <button className={`chub-results${hotRes ? " is-hotspot" : ""}`} onClick={openResults}><img src="assets/figma/tesla-white-side.png" alt="" /><div><b>Ver resultados y sorteos anteriores</b><small>{resultsSub}</small></div><ChevronRight size={18} color="#919aaa" />{hotRes && <HotNum n={noF ? 4 : 1} />}</button>
       {v === "live" && <button type="button" className={`chub-live${hotRes ? " is-hotspot" : ""}`} onClick={openLive}>
-        <img src="/assets/figma/hub-live-video.svg" alt="" width={16} height={16} />
+        <img src="assets/figma/hub-live-video.svg" alt="" width={16} height={16} />
         <span>Ver sorteo N°5 en VIVO</span>
-        <img src="/assets/figma/hub-live-dot.svg" alt="" width={16} height={16} />
+        <img src="assets/figma/hub-live-dot.svg" alt="" width={16} height={16} />
         {hotRes && <HotNum n={noF ? 5 : 2} />}
       </button>}
       {showTickets && <>
@@ -1884,7 +1884,7 @@ function CampaignHubScreen({ next, prev, openStores, openTickets, openTicket, op
       </>}
       {v !== "soldOut" && v !== "ended" && (hideStores ? <div className="chub-pide"><div><b>Pide y gana boletos</b><small>Tiendas participantes de hoy</small></div></div> : <button className={`chub-pide${hotSto ? " is-hotspot" : ""}`} onClick={openStores}><div><b>Pide y gana boletos</b><small>Tiendas participantes de hoy</small></div><ChevronRight size={18} color="#919aaa" />{hotSto && <HotNum n={noF ? pideN : 1} />}</button>)}
       {v === "noCoverage" && <div className={`chub-none empty-coverage${focus === "stores" ? " is-hotspot" : ""}`}>
-        <img src="/assets/figma/empty-shop.svg" alt="" width={48} height={48} />
+        <img src="assets/figma/empty-shop.svg" alt="" width={48} height={48} />
         <div>
           <b>Aún no hay tiendas para ganar boletos en esta dirección</b>
           <small>Espéralo próximamente</small>
@@ -1892,7 +1892,7 @@ function CampaignHubScreen({ next, prev, openStores, openTickets, openTicket, op
         {focus === "stores" && <HotNum n={1} />}
       </div>}
       {v === "noStoresDay" && <div className={`chub-none empty-coverage${focus === "stores" ? " is-hotspot" : ""}`}>
-        <img src="/assets/figma/empty-shop.svg" alt="" width={48} height={48} />
+        <img src="assets/figma/empty-shop.svg" alt="" width={48} height={48} />
         <div>
           <b>Hoy no hay tiendas participantes<br />en tu zona</b>
           <small>Regresa mañana</small>
@@ -1900,14 +1900,14 @@ function CampaignHubScreen({ next, prev, openStores, openTickets, openTicket, op
         {focus === "stores" && <HotNum n={1} />}
       </div>}
       {v === "soldOut" && <div className="chub-none chub-sold-empty empty-coverage">
-        <img src="/assets/figma/empty-shop.svg" alt="" width={48} height={48} />
+        <img src="assets/figma/empty-shop.svg" alt="" width={48} height={48} />
         <div>
           <b>Se terminaron los boletos<br />para el sorteo de hoy</b>
           <small>Los boletos que tengas acumulados para el sorteo participarán pero no podrás ganar boletos adicionales</small>
         </div>
       </div>}
       {v === "ended" && <div className="chub-none chub-sold-empty empty-coverage">
-        <img src="/assets/figma/empty-shop.svg" alt="" width={48} height={48} />
+        <img src="assets/figma/empty-shop.svg" alt="" width={48} height={48} />
         <div>
           <b>Los sorteos han terminado</b>
           <small>Ya no se emiten boletos ni hay tiendas participantes</small>
@@ -1969,9 +1969,9 @@ function MisBoletosScreen({ back, openStores, openTicket, extraTicket, soldOut =
     </> : <>
       {copy && <p className={`bol-copy${sorteoFilter === "hoy" ? " is-hoy" : ""}`}>{copy}</p>}
       {liveHoy && <button type="button" className="chub-live bol-live is-hotspot" onClick={openLive}>
-        <img src="/assets/figma/hub-live-video.svg" alt="" width={16} height={16} />
+        <img src="assets/figma/hub-live-video.svg" alt="" width={16} height={16} />
         <span>Ver sorteo N°5 en VIVO</span>
-        <img src="/assets/figma/hub-live-dot.svg" alt="" width={16} height={16} />
+        <img src="assets/figma/hub-live-dot.svg" alt="" width={16} height={16} />
         <HotNum n={3} />
       </button>}
       {canEarnMore && <button className="bol-cta is-hotspot" onClick={openStores}>Gana más boletos<HotNum n={3} /></button>}
@@ -2018,14 +2018,14 @@ function FaqScreen({ back, openStores, openTickets, openLegal }: { back: () => v
   return <div className="screen faq" data-scroll="faq"><StatusBar />
     <div className="faq-header">
       <button className="faq-back is-hotspot" onClick={back} aria-label="Cerrar">
-        <img src="/assets/figma/store/close.svg" alt="" width={24} height={24} />
+        <img src="assets/figma/store/close.svg" alt="" width={24} height={24} />
         <HotNum n={1} />
       </button>
-      <img className="faq-word" src="/assets/figma/faq/wordmark.svg" alt="TESLA" width={94} height={11} />
+      <img className="faq-word" src="assets/figma/faq/wordmark.svg" alt="TESLA" width={94} height={11} />
     </div>
     <h2 className="faq-title">Participa por ganar un Tesla diario:</h2>
     <div className="faq-steps">{faqSteps.map((step, i) => <div className="faq-step" key={step.ico}>
-      <span className="faq-ico"><img src={`/assets/figma/${step.ico}.svg`} alt="" width={20} height={20} /></span>
+      <span className="faq-ico"><img src={`assets/figma/${step.ico}.svg`} alt="" width={20} height={20} /></span>
       <span className="faq-num">{i + 1}</span>
       <p>{step.text}</p>
     </div>)}</div>
@@ -2035,7 +2035,7 @@ function FaqScreen({ back, openStores, openTickets, openLegal }: { back: () => v
         <button className="faq-q is-hotspot" onClick={() => toggle(i)}>
           <span>{item.q}</span>
           <i className="faq-exp">
-            <img src="/assets/figma/faq/expand-less.svg" alt="" width={16} height={16} className={open[i] ? undefined : "is-down"} />
+            <img src="assets/figma/faq/expand-less.svg" alt="" width={16} height={16} className={open[i] ? undefined : "is-down"} />
           </i>
           {i === 0 && <HotNum n={2} />}
         </button>
@@ -2063,7 +2063,7 @@ function LegalLandingScreen({ back, doc = "bases" }: { back: () => void; doc?: "
     <div className="legal-chrome">
       <div className="legal-chrome-row">
         <button className="faq-back is-hotspot" onClick={back} aria-label="Cerrar">
-          <img src="/assets/figma/store/close.svg" alt="" width={24} height={24} />
+          <img src="assets/figma/store/close.svg" alt="" width={24} height={24} />
           <HotNum n={1} />
         </button>
         <span className="legal-url">{privacy ? "rappi.com/aviso-de-privacidad" : "rappi.com/sorteo-tesla/bases"}</span>
@@ -2192,9 +2192,9 @@ const storeGrid = [
 function StoreProductCard({ img, price, wide, onAdd, hot, hotN = 2 }: { img: string; price: string; wide?: boolean; onAdd: () => void; hot?: boolean; hotN?: number }) {
   return <div className={`sd-prod${wide ? " wide" : ""}`}>
     <div className="sd-prod-img">
-      <img src={`/assets/figma/store/${img}.png`} alt="" />
+      <img src={`assets/figma/store/${img}.png`} alt="" />
       <button className={`sd-plus${hot ? " is-hotspot" : ""}`} onClick={onAdd} aria-label="Agregar">
-        <img src="/assets/figma/store/plus.svg" alt="" width={40} height={40} />
+        <img src="assets/figma/store/plus.svg" alt="" width={40} height={40} />
         {hot && <HotNum n={hotN} />}
       </button>
     </div>
@@ -2226,16 +2226,16 @@ function sheetDismiss(onClose: () => void) {
 function StoreOfferCards({ teslaPct, promoPct, onTesla, hot = true, tesla = true, hotN = 1 }: { teslaPct: number; promoPct: number; onTesla: () => void; hot?: boolean; tesla?: boolean; hotN?: number }) {
   return <div className="sd-offers">
     {tesla ? <button className={`sd-offer tesla${hot ? " is-hotspot" : ""}`} onClick={onTesla}>
-      <img className="sd-offer-bg" src="/assets/figma/store/offer-tesla.svg" alt="" width={151} height={72} />
-      <img className="sd-offer-word" src="/assets/figma/store/offer-word.svg" alt="TESLA" width={42} height={5} />
+      <img className="sd-offer-bg" src="assets/figma/store/offer-tesla.svg" alt="" width={151} height={72} />
+      <img className="sd-offer-word" src="assets/figma/store/offer-word.svg" alt="TESLA" width={42} height={5} />
       <span className="sd-offer-copy"><p>1 Boleto Tesla</p><small>Min: $80</small></span>
       <i className="sd-bar"><i style={{ width: `${teslaPct}%` }} /></i>
       <em>Aplica T&C</em>
       {hot && <HotNum n={hotN} />}
     </button> : null}
     <div className="sd-offer promo">
-      <img className="sd-offer-bg" src="/assets/figma/store/offer-promo.svg" alt="" width={151} height={72} />
-      <img className="sd-moto" src="/assets/figma/store/moto.svg" alt="" width={16} height={16} />
+      <img className="sd-offer-bg" src="assets/figma/store/offer-promo.svg" alt="" width={151} height={72} />
+      <img className="sd-moto" src="assets/figma/store/moto.svg" alt="" width={16} height={16} />
       <span className="sd-offer-copy"><p>Envío gratis Pro</p><small>Min: $100</small></span>
       <span className="sd-offer-tcrow">
         <i className="sd-bar"><i style={{ width: `${promoPct}%` }} /></i>
@@ -2248,8 +2248,8 @@ function StoreOfferCards({ teslaPct, promoPct, onTesla, hot = true, tesla = true
 function DockOfferIcon({ unlocked }: { unlocked: boolean }) {
   return <span className={`sd-dock-ico${unlocked ? " check" : ""}`}>
     {unlocked
-      ? <img src="/assets/figma/store/ico-check.svg" alt="" width={16} height={16} />
-      : <img src="/assets/figma/store/ico-tesla.svg" alt="" width={28} height={16} />}
+      ? <img src="assets/figma/store/ico-check.svg" alt="" width={16} height={16} />
+      : <img src="assets/figma/store/ico-tesla.svg" alt="" width={28} height={16} />}
   </span>;
 }
 
@@ -2260,7 +2260,7 @@ function StoreBasketDock({
   onBenefits: () => void; onCart: () => void; cta?: string; bare?: boolean; tesla?: boolean; hot?: boolean; hotN?: number; offerN?: number; barFocus?: boolean;
 }) {
   const pct = Math.min(100, (total / TICKET_MIN) * 100);
-  const thumbs = qty > 1 ? ["/assets/figma/store/p2.png", "/assets/figma/store/p1.png"] : ["/assets/figma/store/p1.png"];
+  const thumbs = qty > 1 ? ["assets/figma/store/p2.png", "assets/figma/store/p1.png"] : ["assets/figma/store/p1.png"];
   return <div className={`sd-dock${bare ? " in-flow" : ""}${!bare && tesla && unlocked ? " is-celeb" : ""}`}>
     {!bare && tesla && <div className={`sd-game${unlocked ? " on" : ""}`}>
       {unlocked && <div className="sd-celeb" aria-hidden="true">
@@ -2269,7 +2269,7 @@ function StoreBasketDock({
           <span className="sd-confetti left" />
           <div className="sd-celeb-text">
             <p>1 Boleto</p>
-            <img src="/assets/figma/tesla-wordmark.svg" alt="TESLA" width={96} height={12} />
+            <img src="assets/figma/tesla-wordmark.svg" alt="TESLA" width={96} height={12} />
           </div>
           <span className="sd-confetti right" />
         </div>
@@ -2385,18 +2385,18 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
   return <div className="screen store-dest">
     <div className={`sd-scroll${qty > 0 && !cartOpen ? ` has-dock${unlocked ? " celeb" : ""}` : ""}`} data-scroll="store-dest" ref={scroller}>
       <div className="sd-hero">
-        <img className="sd-hero-img" src="/assets/figma/store/hero.png" alt="" />
+        <img className="sd-hero-img" src="assets/figma/store/hero.png" alt="" />
         <StatusBar />
         <div className="sd-nav">
           <button className="sd-ico" onClick={back} aria-label="Cerrar">
-            <img src="/assets/figma/store/close.svg" alt="" width={24} height={24} />
+            <img src="assets/figma/store/close.svg" alt="" width={24} height={24} />
           </button>
           <span className="sd-nav-grow" />
           <span className="sd-ico" aria-hidden="true"><Search size={18} /></span>
           <span className="sd-ico" aria-hidden="true"><Share size={18} /></span>
           <span className="sd-ico" aria-hidden="true"><Bookmark size={18} /></span>
         </div>
-        {soldOut ? null : <span className={`sd-tag${badgeHot ? " is-hotspot" : ""}`}><span className="chub-tag-label">BOLETO TESLA</span><i className="chub-tag-car"><img src="/assets/figma/home/tesla-a.png" alt="" /></i>{badgeHot && <HotNum n={1} />}</span>}
+        {soldOut ? null : <span className={`sd-tag${badgeHot ? " is-hotspot" : ""}`}><span className="chub-tag-label">BOLETO TESLA</span><i className="chub-tag-car"><img src="assets/figma/home/tesla-a.png" alt="" /></i>{badgeHot && <HotNum n={1} />}</span>}
       </div>
       <div className="sd-id">
         <div className="sd-logo" aria-hidden="true"><Store size={14} /><span>Tienda</span></div>
@@ -2407,7 +2407,7 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
         <div><small>Envío</small><b>$14.00</b></div>
         <div>
           <small>Calificación</small>
-          <b><img src="/assets/figma/store/star.svg" alt="" width={12} height={12} />4.5 <em>(1240)</em></b>
+          <b><img src="assets/figma/store/star.svg" alt="" width={12} height={12} />4.5 <em>(1240)</em></b>
         </div>
       </div>
       <StoreOfferCards teslaPct={teslaPct} promoPct={promoPct} onTesla={() => { if (!soldOut) setOfferOpen(true); }} hot={offerHot} hotN={nOffer} tesla={!soldOut} />
@@ -2438,10 +2438,10 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
       <div className="sd-sheet sd-sold-sheet">
         <h2>Se terminaron los boletos para el sorteo de hoy</h2>
         <div className="sd-sold-mid">
-          <img className="sd-sold-word" src="/assets/figma/home/tesla-word.svg" alt="" width={65} height={8} />
+          <img className="sd-sold-word" src="assets/figma/home/tesla-word.svg" alt="" width={65} height={8} />
           <p>No recibirás un boleto para el sorteo con este pedido.</p>
           <div className="sd-sold-car">
-            <img src="/assets/figma/home/tesla-a.png" alt="" width={153} height={86} />
+            <img src="assets/figma/home/tesla-a.png" alt="" width={153} height={86} />
           </div>
         </div>
         <button type="button" className="sd-sold-ok is-hotspot" onClick={() => setJoinOpen(false)}>Entendido<HotNum n={1} /></button>
@@ -2454,7 +2454,7 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
       </button>
       <div className="sd-sheet sd-join-sheet">
         <h2>Participa en el sorteo<br />de un Tesla diario</h2>
-        <img className="sd-join-car" src="/assets/figma/tesla-white-side.png" alt="" width={341} height={191} />
+        <img className="sd-join-car" src="assets/figma/tesla-white-side.png" alt="" width={341} height={191} />
         <p className="sd-join-legal">Al tocar “Acepto participar” aceptas los <button type="button" className="sd-join-tc is-hotspot" onClick={() => openLegal?.("bases")}>T&C<HotNum n={3} /></button></p>
         <button className="sd-join-accept is-hotspot" onClick={acceptJoin}>Acepto participar<ArrowRight size={18} /><HotNum n={1} /></button>
         <button className="sd-join-skip is-hotspot" onClick={() => { setJoined(false); setJoinOpen(false); }}>No quiero participar<HotNum n={2} /></button>
@@ -2467,9 +2467,9 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
       </button>
       <div className="sd-popup">
         <div className="sd-offer-sheet-head">
-          <img className="sd-offer-id" src="/assets/figma/store/offer-id.png" alt="TESLA" width={159} height={30} />
+          <img className="sd-offer-id" src="assets/figma/store/offer-id.png" alt="TESLA" width={159} height={30} />
           <button type="button" className="sd-close is-hotspot" onClick={() => setOfferOpen(false)} aria-label="Cerrar">
-            <img src="/assets/figma/store/offer-close.svg" alt="" width={24} height={24} />
+            <img src="assets/figma/store/offer-close.svg" alt="" width={24} height={24} />
             <HotNum n={1} />
           </button>
         </div>
@@ -2491,7 +2491,7 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
               <span>$80</span>
             </div>
             <div className="sd-offer-pointer" style={{ left: `${Math.min(246, Math.max(20, (total / TICKET_MIN) * 278))}px` }}>
-              <img className="sd-offer-dots" src="/assets/figma/store/line-dots.svg" alt="" />
+              <img className="sd-offer-dots" src="assets/figma/store/line-dots.svg" alt="" />
               <span className="sd-offer-bubble">{money(total)}</span>
             </div>
           </div>
@@ -2509,7 +2509,7 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
         <div className="sd-ben-head">
           <h2>Completa y ahorra</h2>
           <button className="sd-close" onClick={() => setBenefitsOpen(false)} aria-label="Cerrar">
-            <img src="/assets/figma/store/close.svg" alt="" width={24} height={24} />
+            <img src="assets/figma/store/close.svg" alt="" width={24} height={24} />
           </button>
         </div>
         <div className={`sd-ben-list${barFocus ? " is-hotspot" : ""}`}>
@@ -2522,7 +2522,7 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
               <p className="sd-ben-hint">{teslaOn ? "Tienes 2 beneficios por desbloquear" : "Tienes 1 beneficio por desbloquear"}</p>
             </div>
             <div className="sd-ben-row">
-              <div className="sd-ben-amt"><span>$50</span><span className={`sd-ben-dot${proApplied ? "" : " lock"}`}>{proApplied ? <Check size={10} strokeWidth={3} /> : <img src="/assets/figma/store/moto.svg" alt="" width={10} height={10} />}</span></div>
+              <div className="sd-ben-amt"><span>$50</span><span className={`sd-ben-dot${proApplied ? "" : " lock"}`}>{proApplied ? <Check size={10} strokeWidth={3} /> : <img src="assets/figma/store/moto.svg" alt="" width={10} height={10} />}</span></div>
               <div className="sd-ben-txt">
                 <b>Envío gratis por ser Pro</b>
                 <small className={proApplied ? "ok" : ""}>{proApplied ? "Aplicado" : `Te faltan ${money(Math.max(0, PRO_MIN - total))}`}</small>
@@ -2531,7 +2531,7 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
             {teslaOn && <div className="sd-ben-row">
               <div className="sd-ben-amt"><span>$80</span><span className={`sd-ben-dot${unlocked ? "" : " lock"}`}>{unlocked ? <Check size={10} strokeWidth={3} /> : <Ticket size={10} />}</span></div>
               <div className="sd-ben-txt">
-                <img src="/assets/figma/tesla-wordmark.svg" alt="TESLA" />
+                <img src="assets/figma/tesla-wordmark.svg" alt="TESLA" />
                 <b>1 Boleto Tesla</b>
                 <small className={unlocked ? "ok" : ""}>{unlocked ? "¡Conseguiste el beneficio!" : `Te faltan ${money(remain)}`}</small>
               </div>
@@ -2548,7 +2548,7 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
       <div className="sd-cart-nav">
         <div className="sd-cart-nav-row">
           <button className="sd-close" onClick={() => setCartOpen(false)} aria-label="Cerrar">
-            <img src="/assets/figma/store/close.svg" alt="" width={24} height={24} />
+            <img src="assets/figma/store/close.svg" alt="" width={24} height={24} />
           </button>
           <h1>Nombre de la tienda</h1>
           <button className="sd-cart-store" onClick={() => setCartOpen(false)}>Ver tienda<ChevronRight size={14} /></button>
@@ -2557,7 +2557,7 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
       </div>
       <div className="sd-cart-scroll">
         {qty > 0 && <div className="sd-cart-line">
-          <img src="/assets/figma/store/p1.png" alt="" />
+          <img src="assets/figma/store/p1.png" alt="" />
           <div>
             <p>Nombre de producto</p>
             <b>{money(ITEM_PRICE)}</b>
@@ -2573,8 +2573,8 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
           <h3>Completa tu pedido</h3>
           <div className="sd-upsell-row">
             {storeGrid.slice(0, 3).map(p => <div className="sd-up" key={p.img}>
-              <img className="pic" src={`/assets/figma/store/${p.img}.png`} alt="" />
-              <button className="sd-plus" onClick={add} aria-label="Agregar"><img src="/assets/figma/store/plus.svg" alt="" width={40} height={40} /></button>
+              <img className="pic" src={`assets/figma/store/${p.img}.png`} alt="" />
+              <button className="sd-plus" onClick={add} aria-label="Agregar"><img src="assets/figma/store/plus.svg" alt="" width={40} height={40} /></button>
               <b>$20</b>
               <p>Nombre de producto</p>
             </div>)}
@@ -2631,13 +2631,13 @@ function StoresListScreen({ back, openStore, variant = "normal" }: { back: () =>
     data-scroll="stores-list"
   >
     {empty && <div className="stores-tesla" aria-hidden="true">
-      <img src="/assets/figma/home/tesla-a.png" alt="" width={165} height={92} />
+      <img src="assets/figma/home/tesla-a.png" alt="" width={165} height={92} />
     </div>}
     <div className="stores-sticky">
       <StatusBar />
       <div className="stores-nav">
         <button className="stores-back is-hotspot" onClick={back} aria-label="Atrás">
-          <img src="/assets/figma/stores/arrow-back-ios.svg" alt="" width={24} height={24} />
+          <img src="assets/figma/stores/arrow-back-ios.svg" alt="" width={24} height={24} />
           <HotNum n={1} />
         </button>
         <h1 className="stores-compact">{mapCoverage ? "Zonas de cobertura" : "Tiendas participantes hoy"}</h1>
@@ -2645,21 +2645,21 @@ function StoresListScreen({ back, openStore, variant = "normal" }: { back: () =>
     </div>
     <div className="stores-head">
       {!mapCoverage && !empty && <div className="stores-tesla" aria-hidden="true">
-        <img src="/assets/figma/home/tesla-a.png" alt="" width={165} height={92} />
+        <img src="assets/figma/home/tesla-a.png" alt="" width={165} height={92} />
       </div>}
       <h1 className="stores-title">{mapCoverage ? "Zonas de cobertura" : <>Tiendas<br />participantes HOY</>}</h1>
       <p className="stores-sub">{mapCoverage ? "En estas zonas hay cobertura de tiendas donde puedes ganar boletos Tesla" : "Gana 1 boleto por cada pedido que hagas en estas tiendas el día de hoy."}</p>
     </div>
     {mapCoverage ? <div className="stores-map" aria-label="Zonas de cobertura">
-      <img className="stores-map-img" src="/assets/figma/map/cover.png" alt="" width={375} height={620} />
-      <img className="stores-map-zone a" src="/assets/figma/map/zone-a.svg" alt="" width={303} height={315} />
-      <img className="stores-map-zone b" src="/assets/figma/map/zone-b.svg" alt="" width={256} height={130} />
-      <img className="stores-map-pin" src="/assets/figma/map/gps.svg" alt="" width={38} height={38} />
+      <img className="stores-map-img" src="assets/figma/map/cover.png" alt="" width={375} height={620} />
+      <img className="stores-map-zone a" src="assets/figma/map/zone-a.svg" alt="" width={303} height={315} />
+      <img className="stores-map-zone b" src="assets/figma/map/zone-b.svg" alt="" width={256} height={130} />
+      <img className="stores-map-pin" src="assets/figma/map/gps.svg" alt="" width={38} height={38} />
       <button type="button" className="stores-map-locate" aria-label="Mi ubicación">
-        <img src="/assets/figma/map/locate.svg" alt="" width={24} height={24} />
+        <img src="assets/figma/map/locate.svg" alt="" width={24} height={24} />
       </button>
     </div> : empty ? <div className="stores-none empty-coverage">
-      <img src="/assets/figma/empty-shop.svg" alt="" width={48} height={48} />
+      <img src="assets/figma/empty-shop.svg" alt="" width={48} height={48} />
       <div>
         <b>Hoy no hay tiendas participantes<br />en tu zona</b>
         <small>Regresa mañana</small>
@@ -2667,9 +2667,9 @@ function StoresListScreen({ back, openStore, variant = "normal" }: { back: () =>
     </div> : <div className="stores-grid">
       {storeList.map((s, i) => <button className="store-cell is-hotspot" key={s.name + i} onClick={openStore}>
         <div className={`store-avatar${s.turbo ? " has-turbo" : ""}`}>
-          {s.layers?.map((l, j) => <img key={j} src={`/assets/figma/stores/${l}.png`} alt="" />)}
+          {s.layers?.map((l, j) => <img key={j} src={`assets/figma/stores/${l}.png`} alt="" />)}
           {s.mark && <StoreMark {...s.mark} />}
-          {s.turbo && <span className="store-turbo"><img src="/assets/figma/stores/turbo.svg" alt="Turbo" /></span>}
+          {s.turbo && <span className="store-turbo"><img src="assets/figma/stores/turbo.svg" alt="Turbo" /></span>}
         </div>
         <b>{s.name}</b>
         <small>Min: $80</small>
@@ -2738,7 +2738,7 @@ function PrevResultsScreen({ back, openStores, openTicket, openYoutube, winner =
   return <div className="screen prev-results" data-scroll="prev-results"><StatusBar />
     <div className="res-head">
       <button className="stores-back is-hotspot" onClick={back} aria-label="Atrás">
-        <img src="/assets/figma/stores/arrow-back-ios.svg" alt="" width={24} height={24} />
+        <img src="assets/figma/stores/arrow-back-ios.svg" alt="" width={24} height={24} />
         <HotNum n={1} />
       </button>
       <h1>Resultados</h1>
@@ -2766,7 +2766,7 @@ function PrevResultsScreen({ back, openStores, openTicket, openYoutube, winner =
         <small>Sorteado en {winner ? "Agosto 16 de 2026" : draw.dateLong}</small>
       </div>
       <div className={`res-win${winner ? " is-you" : ""}${replay ? " has-replay" : ""}`}>
-        <img className="res-win-car" src="/assets/figma/results/tesla-front.png" alt="" />
+        <img className="res-win-car" src="assets/figma/results/tesla-front.png" alt="" />
         <p className="res-win-label">{winner ? "Tu Boleto ganador" : "Boleto ganador del Tesla"}</p>
         <div className={`res-win-tix${winner ? " gold" : ""}`}><strong>{winner ? "3321-H" : draw.winCode}</strong></div>
         <div className={`res-win-bar${winner ? " contact" : delivered ? " contact" : ""}${replay ? " is-replay" : ""}`}>
