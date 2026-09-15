@@ -598,7 +598,7 @@ const restGenericRows: { title: string; stores: { name: string; photo: string; m
   },
 ];
 
-export function RestaurantsHome({ back, openHub, openStore, openSearch, soldOut = false, focus }: { back: () => void; openHub: () => void; openStore: () => void; openSearch: () => void; soldOut?: boolean; focus?: RestFocus }) {
+export function RestaurantsHome({ back, openHub, openStores, openStore, openSearch, soldOut = false, focus }: { back: () => void; openHub: () => void; openStores?: () => void; openStore: () => void; openSearch: () => void; soldOut?: boolean; focus?: RestFocus }) {
   const on = (k: RestFocus) => !focus || focus === k;
   const hot = (k: RestFocus) => on(k) ? " is-hotspot" : "";
   const num = (k: RestFocus, n: number) => on(k) ? <HotNum n={focus ? 1 : n} /> : null;
@@ -648,7 +648,7 @@ export function RestaurantsHome({ back, openHub, openStore, openSearch, soldOut 
       {num("banner", 2)}
     </button>
     <div className={`rest-tesla-sec${focus === "carousel" ? " is-hotspot" : ""}`}>
-      <button type="button" className={`rest-sec${focus === "carousel" ? "" : hot("carousel")}`} onClick={openHub} aria-label="Gana boletos en estas tiendas">
+      <button type="button" className={`rest-sec${focus === "carousel" ? "" : hot("carousel")}`} onClick={openStores ?? openHub} aria-label="Gana boletos en estas tiendas">
         <img className="rest-word" src="assets/figma/home/tesla-word.svg" alt="TESLA" />
         <img className="rest-sec-car" src="assets/figma/home/tesla-a.png" alt="" />
         <h3 className="rest-h">Gana boletos en estas tiendas</h3>

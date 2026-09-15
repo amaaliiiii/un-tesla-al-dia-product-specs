@@ -117,7 +117,7 @@ const legalHotspots: Hotspot[] = [
 const restHotspots: Hotspot[] = [
   { label: "Chip Tesla", desc: "Deeplink al hub del concurso." },
   { label: "Banner del concurso", desc: "Abre el hub del concurso." },
-  { label: "Gana boletos en estas tiendas", desc: "Abre el hub del concurso." },
+  { label: "Gana boletos en estas tiendas", desc: "Abre el landing vertical de todas las tiendas participantes de hoy." },
   { label: "Tienda con tag", desc: "Abre el storefront. El tag Boleto Tesla marca las tiendas que participan hoy." },
 ];
 const searchHotspots: Hotspot[] = [
@@ -568,7 +568,7 @@ const flows: Flow[] = [
     description: "Sección Gana boletos en estas tiendas con el carrusel de tiendas participantes.",
     icon: <Store size={17} />,
     steps: [
-      { title: "Sorteo activo", kind: "rest", note: "", props: { focus: "carousel" }, hotspots: [{ label: "Gana boletos en estas tiendas", desc: "Header con el logo Tesla y carrusel de tiendas participantes. El header abre el hub; cada tienda abre su storefront." }] },
+      { title: "Sorteo activo", kind: "rest", note: "", props: { focus: "carousel" }, hotspots: [{ label: "Gana boletos en estas tiendas", desc: "Header con el logo Tesla y carrusel de tiendas participantes. El header abre el landing de todas las tiendas; cada tienda abre su storefront." }] },
       { title: "Agotado", kind: "rest", note: "", props: { focus: "carousel", soldOut: true }, hotspots: [{ label: "Gana boletos en estas tiendas", desc: "El carrusel se mantiene, pero las tiendas ya no muestran el tag: hoy no se emiten más boletos." }] },
     ],
   },
@@ -2934,7 +2934,7 @@ function ScreenRenderer({ step, next, prev, goTo, goBack, jumpKind, openStores, 
     case "intro": return <IntroScreen onKnowMore={toHub} onGotIt={() => { if (!goTo("home2") && !goTo("home")) next(); }} openLegal={openLegal} />;
     case "winintro": return <WinnerInappScreen onClose={() => { if (!goTo("home2") && !goTo("home")) next(); }} />;
     case "video": return <VideoScreen key={String(step.props?.src)} src={String(step.props?.src ?? "")} />;
-    case "rest": return <RestaurantsHome back={() => backTo("home2")} openHub={toHub} openStore={openStore} openSearch={() => { if (!goTo("search")) onSearch?.(); }} soldOut={!!step.props?.soldOut} focus={step.props?.focus as RestFocus | undefined} />;
+    case "rest": return <RestaurantsHome back={() => backTo("home2")} openHub={toHub} openStores={() => { if (!goTo("stores")) openStores(); }} openStore={openStore} openSearch={() => { if (!goTo("search")) onSearch?.(); }} soldOut={!!step.props?.soldOut} focus={step.props?.focus as RestFocus | undefined} />;
     case "search": return <SearchScreen back={() => backTo("rest", "home2")} openHub={toHub} openStore={openStore} soldOut={!!step.props?.soldOut} />;
     case "chub": return <CampaignHubScreen key={`${hubVariantFromProps(step.props)}-${step.props?.focus ?? ""}`} next={openFaq} prev={() => backTo("home2", "home")} openStores={openStores} openTickets={toTickets} openTicket={openTicket} openResults={openResults} openStore={openStore} openLive={toLive} tickets={!!step.props?.tickets} extraTicket={extraTicket} variant={hubVariantFromProps(step.props)} focus={step.props?.focus as HubFocus | undefined} />;
     case "prevresults": return <PrevResultsScreen back={() => backTo("chub")} openStores={openStores} openTicket={openTicket} openYoutube={openYoutube} winner={!!step.props?.winner} delivered={!!step.props?.delivered} live={!!step.props?.live} />;
@@ -3286,7 +3286,7 @@ function App() {
               {showFaq && <FaqScreen back={() => { if (!goBack()) setShowFaq(false); }} openStores={openStores} openTickets={openBoletos} openLegal={openLegal} />}
               {showStores && <StoresListScreen back={() => { if (!goBack()) setShowStores(false); }} openStore={openStore} variant={storesVariantForFlow(flow.steps, step)} />}
               {showStore && <StoreDestScreen startPhase={storePhaseFromView(storeView)} back={() => { if (!goBack()) setShowStore(false); }} soldOut={!!step.props?.soldOut} openLegal={openLegal} onTicketWon={setEarnedTicket} onView={setStoreView} onGoHub={() => { if (!goTo("chub")) { if (!goBack()) setShowStore(false); } }} />}
-              {showRest && <RestaurantsHome back={() => { if (!goBack()) setShowRest(false); }} openHub={() => { if (!goTo("chub")) openOverlay(showBoletos, () => setShowBoletos(true)); }} openStore={openStore} openSearch={() => { if (!goTo("search")) openSearchOverlay(); }} />}
+              {showRest && <RestaurantsHome back={() => { if (!goBack()) setShowRest(false); }} openHub={() => { if (!goTo("chub")) openOverlay(showBoletos, () => setShowBoletos(true)); }} openStores={openStores} openStore={openStore} openSearch={() => { if (!goTo("search")) openSearchOverlay(); }} />}
               {showSearch && <SearchScreen back={() => { if (!goBack()) setShowSearch(false); }} openHub={() => { if (!goTo("chub")) openOverlay(showBoletos, () => setShowBoletos(true)); }} openStore={openStore} />}
               {ticket && <TicketDetailSheet ticket={ticket} onClose={() => { if (!goBack()) setTicket(null); }} openLegal={openLegal} />}
               {legalDoc && <LegalLandingScreen back={() => { if (!goBack()) setLegalDoc(null); }} doc={legalDoc} />}
