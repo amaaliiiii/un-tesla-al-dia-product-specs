@@ -1509,3 +1509,10 @@ button.rh-search{border:0}
 .show-hotspots .rh-store.is-hotspot:after{inset:-4px auto auto -4px;width:242px;height:160px}
 .show-hotspots .rh-store.peek.is-hotspot:after{width:98px}
 .show-hotspots .rh-store.is-hotspot .hot-badge{top:-8px;left:-8px}
+
+/* Grabaciones de motion dentro del mock */
+.video-screen{position:relative;width:375px;height:812px;background:#000;overflow:hidden}
+.video-screen video{width:375px;height:812px;object-fit:cover;display:block;cursor:pointer}
+.video-controls{position:absolute;left:0;right:0;bottom:26px;display:flex;justify-content:center;align-items:center;gap:6px;z-index:2}
+.video-controls button{height:28px;padding:0 12px;border:0;border-radius:1000px;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:#fff;font-size:12px;font-weight:600;font-family:inherit;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.video-controls button:last-child{padding:0;width:28px;justify-content:center}

@@ -18,7 +18,7 @@ type StepKind =
   | "optin" | "rules" | "home" | "hub" | "tickets" | "stores" | "store"
   | "live" | "results" | "delivery" | "won" | "confirm" | "pay"
   | "cancelled" | "cap" | "intro" | "faq" | "chub" | "home2" | "boletos" | "prevresults"
-  | "rest" | "search" | "winintro";
+  | "rest" | "search" | "winintro" | "video";
 
 type Hotspot = { label: string; desc: string };
 
@@ -534,6 +534,17 @@ const flows: Flow[] = [
     ],
   },
   {
+    id: "ctx-home-motion", group: "context", ctx: { area: "existing", screen: "home", render: "Animaciones" },
+    label: "Home", short: "Animaciones",
+    description: "Motion del banner de Tesla en el home y su entrada al landing.",
+    icon: <Play size={17} />,
+    disclaimer: "Grabaciones de diseño: muestran el motion real, no son la pantalla navegable del spec.",
+    steps: [
+      { title: "Banner y entrada al landing", kind: "video", note: "", props: { src: "assets/video/banner-landing.mp4", caption: "El banner del home con el timer corriendo; el tap abre el landing del concurso y de ahí a las tiendas participantes de hoy." }, hotspots: [] },
+      { title: "Banner del ganador", kind: "video", note: "", props: { src: "assets/video/banner-ganador.mp4", caption: "El banner de ganador en el home y el tap que lleva a Resultados con el boleto ganador." }, hotspots: [] },
+    ],
+  },
+  {
     id: "ctx-rest-chip", group: "context", ctx: { area: "existing", screen: "rest-home", render: "Chips" },
     label: "Rest home", short: "Chips",
     description: "Chip de la categoría Tesla en la fila de categorías del home de restaurantes.",
@@ -700,6 +711,16 @@ const flows: Flow[] = [
     icon: <Gift size={17} />,
     steps: [
       { title: "Único estado", kind: "store", note: "", props: { phase: "delivered" }, hotspots: [{ label: "¡Ganaste 1 boleto Tesla!", desc: "Aparece al entregarse el pedido y abre la confirmación del boleto. No tiene otros estados." }] },
+    ],
+  },
+  {
+    id: "ctx-rescue-motion", group: "context", ctx: { area: "existing", screen: "rescue", render: "Animación" },
+    label: "Rescue screen", short: "Animación",
+    description: "Motion de la entrega del boleto: rescue screen, captura de datos y detalle del boleto.",
+    icon: <Play size={17} />,
+    disclaimer: "Grabación de diseño: muestra el motion real, no es la pantalla navegable del spec.",
+    steps: [
+      { title: "Entrega del boleto", kind: "video", note: "", props: { src: "assets/video/entrega-boleto.mp4", caption: "Pedido entregado, ¡Ganaste 1 boleto!, confirmación de nombre y teléfono, y el detalle del boleto emitido." }, hotspots: [] },
     ],
   },
   {
@@ -1109,6 +1130,30 @@ function DrawVideo({ playing, onPlay, live, n }: { playing?: boolean; onPlay?: (
     {!playing && <span className="res-vid-play" aria-hidden="true"><Play size={live ? 20 : 16} fill="currentColor" /></span>}
     <HotNum n={n} />
   </button>;
+}
+
+function VideoScreen({ src }: { src: string }) {
+  const el = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(true);
+  const toggle = () => {
+    const v = el.current;
+    if (!v) return;
+    if (v.paused) { v.play(); setPlaying(true); } else { v.pause(); setPlaying(false); }
+  };
+  const replay = () => {
+    const v = el.current;
+    if (!v) return;
+    v.currentTime = 0;
+    v.play();
+    setPlaying(true);
+  };
+  return <div className="screen video-screen">
+    <video ref={el} src={src} autoPlay muted loop playsInline onClick={toggle} />
+    <div className="video-controls">
+      <button type="button" onClick={toggle}>{playing ? "Pausar" : "Reproducir"}</button>
+      <button type="button" onClick={replay} aria-label="Volver a empezar"><RotateCcw size={14} /></button>
+    </div>
+  </div>;
 }
 
 function YoutubePlayerScreen({ back }: { back: () => void }) {
@@ -2881,6 +2926,7 @@ function ScreenRenderer({ step, next, prev, goTo, goBack, jumpKind, openStores, 
     case "home2": return <HomeRappiScreen next={shownHome === "winner" ? () => { if (!goTo("prevresults")) next(); } : toHub} variant={shownHome} size={step.props?.small ? "small" : "large"} onRestaurants={() => { if (!goTo("rest")) onRestaurants?.(); }} onSearch={() => { if (!goTo("search")) onSearch?.(); }} onTickets={toTickets} onStores={openStores} onResults={() => { if (!goTo("prevresults")) openResults(); }} extraTicket={extraTicket} tickets={homeTickets} storeTags={!!step.props?.tags && !step.props?.soldOut} single={!!step.props?.single} timerCta={!!step.props?.timerCta} navHot={!step.props?.single && !step.props?.tags} tagFocus={!!step.props?.tags} />;
     case "intro": return <IntroScreen onKnowMore={toHub} onGotIt={() => { if (!goTo("home2") && !goTo("home")) next(); }} openLegal={openLegal} />;
     case "winintro": return <WinnerInappScreen onClose={() => { if (!goTo("home2") && !goTo("home")) next(); }} />;
+    case "video": return <VideoScreen key={String(step.props?.src)} src={String(step.props?.src ?? "")} />;
     case "rest": return <RestaurantsHome back={() => backTo("home2")} openHub={toHub} openStore={openStore} openSearch={() => { if (!goTo("search")) onSearch?.(); }} soldOut={!!step.props?.soldOut} focus={step.props?.focus as RestFocus | undefined} />;
     case "search": return <SearchScreen back={() => backTo("rest", "home2")} openHub={toHub} openStore={openStore} soldOut={!!step.props?.soldOut} />;
     case "chub": return <CampaignHubScreen key={`${hubVariantFromProps(step.props)}-${step.props?.focus ?? ""}`} next={openFaq} prev={() => backTo("home2", "home")} openStores={openStores} openTickets={toTickets} openTicket={openTicket} openResults={openResults} openStore={openStore} openLive={toLive} tickets={!!step.props?.tickets} extraTicket={extraTicket} variant={hubVariantFromProps(step.props)} focus={step.props?.focus as HubFocus | undefined} />;
@@ -3252,6 +3298,7 @@ function App() {
             {(!!step.props?.ticketsHoy || !!step.props?.emptyManana) && !showYoutube && <p className="spec-note">El usuario ya tiene boletos del sorteo de hoy, pero no de mañana. Mañana es el chip default y muestra el mismo empty de la landing de Mis boletos. Hoy sí lista los boletos.</p>}
             {inStore && storeView === "won" && <p className="spec-note">Se abre proactivamente después de la Rescue screen. Sale sola y no hay manera de cerrarla si el usuario no confirma sus datos. Tap en el campo de nombre o de teléfono abre el teclado automáticamente.</p>}
             {step.kind === "cancelled" && <p className="spec-note">El pedido se canceló antes de entregarse. Esta modal es el único estado del caso: no se emite boleto.</p>}
+            {step.kind === "video" && step.props?.caption && <p className="spec-note">{String(step.props.caption)}</p>}
             {flow.disclaimer && <p className="spec-note is-rule">*{flow.disclaimer}</p>}
             <p className="disclaimer">Lo que no está marcado en morado, es solo informativo.</p>
             <div className="nav-buttons"><button onClick={prev} disabled={stepIndex === 0}><ArrowLeft />Anterior</button><button onClick={next}>{stepIndex === flow.steps.length - 1 ? (section === "flujos" ? "Reiniciar flujo" : "Volver al primero") : "Siguiente"}<ArrowRight /></button></div>
