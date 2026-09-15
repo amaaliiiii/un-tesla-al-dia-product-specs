@@ -99,7 +99,7 @@ const transitHotspots: Hotspot[] = [
   { label: "Tu boleto está en camino", desc: "Abre el hub del concurso. Atrás vuelve a este order tracking." },
 ];
 const deliveredHotspots: Hotspot[] = [
-  { label: "¡Ganaste 1 boleto Tesla!", desc: "Abre la confirmación del boleto. El chat no es accionable." },
+  { label: "¡Ganaste 1 boleto Tesla!", desc: "La pantalla del boleto se abre sola al entregarse el pedido. El banner queda para volver a abrirla. El chat no es accionable." },
 ];
 const wonHotspots: Hotspot[] = [
   { label: "Nombre completo", desc: "Datos precargados. Tap abre el teclado para editarlos." },
@@ -253,7 +253,7 @@ const orderFlowSteps: Step[] = [
   { title: "Vista checkout", kind: "store", note: "", props: { phase: "checkout" }, hotspots: checkoutHotspots },
   { title: "Vista order tracking - Creado", kind: "store", note: "", props: { phase: "created" }, hotspots: createdHotspots },
   { title: "Vista order tracking - En camino", kind: "store", note: "", props: { phase: "transit" }, hotspots: transitHotspots },
-  { title: "Rescue screen", kind: "store", note: "", props: { phase: "delivered" }, hotspots: deliveredHotspots },
+  { title: "Rescue screen", kind: "store", note: "", props: { phase: "delivered", autoTicket: true }, hotspots: deliveredHotspots },
   { title: "Recolección de datos", kind: "store", note: "", props: { phase: "won" }, hotspots: wonHotspots },
   {
     title: "Hub - Con boleto", kind: "chub", note: "",
@@ -710,7 +710,7 @@ const flows: Flow[] = [
     description: "Banner del boleto ganado en la rescue screen del pedido entregado.",
     icon: <Gift size={17} />,
     steps: [
-      { title: "Único estado", kind: "store", note: "", props: { phase: "delivered" }, hotspots: [{ label: "¡Ganaste 1 boleto Tesla!", desc: "Aparece al entregarse el pedido y abre la confirmación del boleto. No tiene otros estados." }] },
+      { title: "Único estado", kind: "store", note: "", props: { phase: "delivered" }, hotspots: [{ label: "¡Ganaste 1 boleto Tesla!", desc: "Aparece al entregarse el pedido. No es el trigger: la pantalla del boleto se abre sola. El banner queda para volver a abrirla. No tiene otros estados." }] },
     ],
   },
   {
@@ -726,7 +726,7 @@ const flows: Flow[] = [
   {
     id: "ctx-capture-form", group: "context", ctx: { area: "new", screen: "capture", render: "Formulario del ganador" },
     label: "Captura de datos", short: "Formulario",
-    description: "Recolección de datos del ganador con los campos precargados.",
+    description: "Recolección de datos del ganador, con los campos precargados. Se abre sola al entregarse el pedido.",
     icon: <User size={17} />,
     steps: [
       { title: "Recolección de datos", kind: "won", note: "", hotspots: wonHotspots },
@@ -2366,7 +2366,7 @@ function storePhaseFromView(view: StoreView): StorePhase {
   return view;
 }
 
-function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startPhase = "join", soldOut = false, focus, startQty, startBenefits = false }: { back: () => void; openLegal?: (doc?: "bases" | "privacy") => void; onTicketWon?: (t: TicketInfo) => void; onGoHub?: () => void; onView?: (v: StoreView) => void; startPhase?: StorePhase; soldOut?: boolean; focus?: StoreFocus; startQty?: number; startBenefits?: boolean }) {
+function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startPhase = "join", soldOut = false, focus, startQty, startBenefits = false, autoTicket = false }: { back: () => void; openLegal?: (doc?: "bases" | "privacy") => void; onTicketWon?: (t: TicketInfo) => void; onGoHub?: () => void; onView?: (v: StoreView) => void; startPhase?: StorePhase; soldOut?: boolean; focus?: StoreFocus; startQty?: number; startBenefits?: boolean; autoTicket?: boolean }) {
   const [joinOpen, setJoinOpen] = useState(startPhase === "join");
   const [joined, setJoined] = useState(startPhase !== "join" && startPhase !== "checkoutAsk");
   const [offerOpen, setOfferOpen] = useState(startPhase === "offer");
@@ -2378,6 +2378,7 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
   const [countryOpen, setCountryOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(startPhase === "confirm");
   const [toast, setToast] = useState(false);
+  const [ticketSeen, setTicketSeen] = useState(false);
   const [fullName, setFullName] = useState("Pedro Atuesta Gomez");
   const [phone, setPhone] = useState("312 1231-2312");
   const [dial, setDial] = useState("+52");
@@ -2401,6 +2402,12 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
     setJoined(true);
     setJoinOpen(false);
   };
+  // El boleto se abre al entregarse el pedido, sin depender del tap en el banner
+  useEffect(() => {
+    if (!autoTicket || phase !== "delivered" || ticketSeen) return;
+    const t = setTimeout(() => { setPhase("won"); setTicketSeen(true); }, 900);
+    return () => clearTimeout(t);
+  }, [autoTicket, phase, ticketSeen]);
   useEffect(() => {
     onView?.(confirmOpen ? "confirm" : phase === "created" ? (joined ? "created" : "createdClean") : phase === "transit" ? (joined ? "transit" : "transitClean") : phase === "delivered" ? (joined ? "delivered" : "deliveredClean") : phase === "won" ? "won" : phase === "checkout" ? (soldOut ? "checkoutSold" : joined ? "checkout" : "checkoutAsk") : cartOpen ? "cart" : offerOpen ? "offer" : joinOpen ? (soldOut ? "sold" : "join") : "store");
   }, [phase, offerOpen, joinOpen, cartOpen, confirmOpen, joined, soldOut, onView]);
@@ -2653,10 +2660,10 @@ function StoreDestScreen({ back, openLegal, onTicketWon, onGoHub, onView, startP
     {phase === "checkout" && <CheckoutScreen back={() => setPhase("store")} joined={joined} soldOut={soldOut} total={total || 80} onJoin={() => setJoined(true)} onContinue={() => setPhase("created")} focusBanner={focus === "banner"} />}
     {phase === "created" && <OrderCreatedScreen joined={joined} onNext={() => setPhase("transit")} onHub={onGoHub} />}
     {phase === "transit" && <OrderTransitScreen joined={joined} onNext={() => setPhase("delivered")} onHub={onGoHub} focusRt={focus === "rt"} />}
-    {phase === "delivered" && <OrderDeliveredScreen joined={joined} onTicket={() => setPhase("won")} toast={toast} onToast={() => { onTicketWon?.(WON_TICKET); onGoHub?.(); }} />}
+    {(phase === "delivered" || phase === "won") && <OrderDeliveredScreen joined={joined} onTicket={() => setPhase("won")} toast={toast} onToast={() => { onTicketWon?.(WON_TICKET); onGoHub?.(); }} />}
     {phase === "won" && <TicketWonScreen name={fullName} phone={phone} dial={dial} onName={setFullName} onPhone={setPhone} onDial={setDial} onCountry={() => setCountryOpen(true)} onConfirm={() => setConfirmOpen(true)} />}
     {countryOpen && <CountryPicker onClose={() => setCountryOpen(false)} onPick={d => { setDial(d); setCountryOpen(false); }} />}
-    {confirmOpen && <ConfirmDataSheet name={fullName} phone={phone} dial={dial} onClose={() => setConfirmOpen(false)} onConfirm={() => { setConfirmOpen(false); setPhase("delivered"); setToast(true); onTicketWon?.(WON_TICKET); }} />}
+    {confirmOpen && <ConfirmDataSheet name={fullName} phone={phone} dial={dial} onClose={() => setConfirmOpen(false)} onConfirm={() => { setConfirmOpen(false); setPhase("delivered"); setTicketSeen(true); setToast(true); onTicketWon?.(WON_TICKET); }} />}
   </div>;
 }
 
@@ -2939,7 +2946,7 @@ function ScreenRenderer({ step, next, prev, goTo, goBack, jumpKind, openStores, 
     case "hub": return <HubScreen next={next} props={step.props} />;
     case "tickets": return <TicketsScreen next={next} props={step.props} />;
     case "stores": return step.props?.location ? <StoresScreen next={next} props={step.props} /> : <StoresListScreen back={() => backTo("chub")} openStore={openStore} variant={storesVariantFromProps(step.props)} />;
-    case "store": return <StoreDestScreen key={`${storePhaseFromProps(step.props)}-${!!step.props?.soldOut}-${step.props?.focus ?? ""}-${step.props?.qty ?? ""}-${!!step.props?.benefits}`} startPhase={storePhaseFromProps(step.props)} soldOut={!!step.props?.soldOut} focus={step.props?.focus as StoreFocus | undefined} startQty={typeof step.props?.qty === "number" ? step.props.qty : undefined} startBenefits={!!step.props?.benefits} back={() => backTo("stores", "rest", "chub")} openLegal={openLegal} onTicketWon={onTicketWon} onGoHub={toHub} onView={onStoreView} />;
+    case "store": return <StoreDestScreen key={`${storePhaseFromProps(step.props)}-${!!step.props?.soldOut}-${step.props?.focus ?? ""}-${step.props?.qty ?? ""}-${!!step.props?.benefits}`} startPhase={storePhaseFromProps(step.props)} soldOut={!!step.props?.soldOut} focus={step.props?.focus as StoreFocus | undefined} startQty={typeof step.props?.qty === "number" ? step.props.qty : undefined} startBenefits={!!step.props?.benefits} autoTicket={!!step.props?.autoTicket} back={() => backTo("stores", "rest", "chub")} openLegal={openLegal} onTicketWon={onTicketWon} onGoHub={toHub} onView={onStoreView} />;
     case "live": return <PrevResultsScreen back={() => backTo("chub")} openStores={openStores} openTicket={openTicket} live />;
     case "results": return <ResultsScreen next={next} delivered={!!step.props?.delivered} />;
     case "delivery": return <OrderDeliveredScreen onTicket={next} />;
@@ -3272,7 +3279,7 @@ function App() {
           <div className="phone-shell">
             <div className="phone-buttons" />
             <div className="phone-screen">
-              <ScreenRenderer step={step} next={next} prev={prev} goTo={goTo} goBack={goBack} jumpKind={jumpKind} openStores={openStores} openResults={openResults} openLiveResults={openLiveResults} openTicket={openTicket} openBoletos={openBoletos} openFaq={openFaq} openStore={openStore} openLegal={openLegal} extraTicket={earnedTicket} onTicketWon={setEarnedTicket} onStoreView={setStoreView} onRestaurants={openRestOverlay} onSearch={openSearchOverlay} openYoutube={openYoutube} />
+              <ScreenRenderer key={flow.id} step={step} next={next} prev={prev} goTo={goTo} goBack={goBack} jumpKind={jumpKind} openStores={openStores} openResults={openResults} openLiveResults={openLiveResults} openTicket={openTicket} openBoletos={openBoletos} openFaq={openFaq} openStore={openStore} openLegal={openLegal} extraTicket={earnedTicket} onTicketWon={setEarnedTicket} onStoreView={setStoreView} onRestaurants={openRestOverlay} onSearch={openSearchOverlay} openYoutube={openYoutube} />
               {showBoletos && <MisBoletosScreen back={() => { if (!goBack()) setShowBoletos(false); }} openStores={openStores} openTicket={openTicket} extraTicket={earnedTicket} soldOut={!!step.props?.soldOut} live={!!step.props?.live} emptyManana={!!step.props?.emptyManana || !!step.props?.ticketsHoy} openLive={openLiveResults} />}
               {showResults && <PrevResultsScreen back={() => { if (!goBack()) { setShowResults(false); setResultsLive(false); } }} openStores={openStores} openTicket={openTicket} openYoutube={openYoutube} winner={!!step.props?.winner} delivered={!!step.props?.delivered || !!step.props?.ended} live={resultsLive} />}
               {showYoutube && <YoutubePlayerScreen back={() => { if (!goBack()) setShowYoutube(false); }} />}
@@ -3296,7 +3303,7 @@ function App() {
               : <div className="action-card"><div className="tap-icon"><span>●</span></div><div><b>Contenido accionable</b></div></div>}
             {showYoutube && <p className="spec-note">El video del sorteo —en vivo o el replay ya guardado— se abre en un webview de YouTube. No se reproduce dentro de Rappi. Cerrar vuelve a Resultados.</p>}
             {(!!step.props?.ticketsHoy || !!step.props?.emptyManana) && !showYoutube && <p className="spec-note">El usuario ya tiene boletos del sorteo de hoy, pero no de mañana. Mañana es el chip default y muestra el mismo empty de la landing de Mis boletos. Hoy sí lista los boletos.</p>}
-            {inStore && storeView === "won" && <p className="spec-note">Se abre proactivamente después de la Rescue screen. Sale sola y no hay manera de cerrarla si el usuario no confirma sus datos. Tap en el campo de nombre o de teléfono abre el teclado automáticamente.</p>}
+            {inStore && storeView === "won" && <p className="spec-note">Se abre automáticamente al entregarse el pedido, encima de la rescue screen: no depende del tap en el banner. No hay manera de cerrarla si el usuario no confirma sus datos, y al confirmar queda la rescue screen por detrás. Tap en el campo de nombre o de teléfono abre el teclado automáticamente.</p>}
             {step.kind === "cancelled" && <p className="spec-note">El pedido se canceló antes de entregarse. Esta modal es el único estado del caso: no se emite boleto.</p>}
             {step.kind === "video" && step.props?.caption && <p className="spec-note">{String(step.props.caption)}</p>}
             {flow.disclaimer && <p className="spec-note is-rule">*{flow.disclaimer}</p>}
