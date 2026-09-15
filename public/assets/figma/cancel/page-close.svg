@@ -1,0 +1,13 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="close-button" clip-path="url(#clip0_0_195)">
+<circle id="color" cx="16" cy="16" r="16" fill="#ECEFF3" style="fill:#ECEFF3;fill:color(display-p3 0.9255 0.9373 0.9529);fill-opacity:1;"/>
+<g id="arrow">
+<path id="color_2" d="M21.566 12.6574C21.852 12.3558 22 11.9502 22 11.5549C22 11.1597 21.8619 10.7645 21.5758 10.4524C20.9938 9.84919 20.0567 9.84919 19.4846 10.4524L16 14.1162C15.9951 14.1161 15.9902 14.1161 15.9852 14.1162L12.5203 10.4524C11.9383 9.84919 11.0012 9.84919 10.4291 10.4524C9.85697 11.0661 9.85697 12.0542 10.4291 12.6574L13.5983 15.999L10.434 19.3426C10.148 19.6442 10 20.0498 10 20.4451C10 20.8403 10.1381 21.2355 10.4242 21.5476C11.0062 22.1508 11.9433 22.1508 12.5154 21.5476L16 17.8838C16.0049 17.8839 16.0098 17.8839 16.0148 17.8838L19.4797 21.5476C20.0617 22.1508 20.9988 22.1508 21.5709 21.5476C22.143 20.9339 22.143 19.9458 21.5709 19.3426L18.4017 16.001L21.566 12.6574Z" fill="black" style="fill:black;fill-opacity:1;"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_195">
+<rect width="32" height="32" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

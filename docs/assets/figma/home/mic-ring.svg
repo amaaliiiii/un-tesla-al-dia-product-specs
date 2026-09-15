@@ -1,0 +1,18 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<foreignObject x="-20.1845" y="-20.1845" width="90.3691" height="90.3691"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(10.09px);clip-path:url(#bgblur_0_0_152_clip_path);height:100%;width:100%"></div></foreignObject><g id="circle-neon" data-figma-bg-blur-radius="20.1845">
+<circle cx="25" cy="25" r="24.6" fill="url(#paint0_linear_0_152)"/>
+<circle cx="25" cy="25" r="24.6" stroke="url(#paint1_linear_0_152)" style="mix-blend-mode:overlay" stroke-width="0.8"/>
+</g>
+<defs>
+<clipPath id="bgblur_0_0_152_clip_path" transform="translate(20.1845 20.1845)"><circle cx="25" cy="25" r="24.6"/>
+</clipPath><linearGradient id="paint0_linear_0_152" x1="11.7644" y1="1.93603" x2="41.0348" y2="41.8712" gradientUnits="userSpaceOnUse">
+<stop stop-color="#FF7A4D" style="stop-color:#FF7A4D;stop-color:color(display-p3 1.0000 0.4784 0.3020);stop-opacity:1;"/>
+<stop offset="0.522241" stop-color="#FF2526" style="stop-color:#FF2526;stop-color:color(display-p3 1.0000 0.1451 0.1490);stop-opacity:1;"/>
+<stop offset="0.853093" stop-color="#FF095B" style="stop-color:#FF095B;stop-color:color(display-p3 1.0000 0.0353 0.3569);stop-opacity:1;"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_152" x1="13.6622" y1="3.03288" x2="21.49" y2="48.5779" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" style="stop-color:white;stop-opacity:1;"/>
+<stop offset="1" stop-color="white" stop-opacity="0" style="stop-color:none;stop-opacity:0;"/>
+</linearGradient>
+</defs>
+</svg>

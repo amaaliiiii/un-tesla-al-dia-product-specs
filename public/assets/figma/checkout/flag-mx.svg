@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="flags">
+<g clip-path="url(#clip0_0_1003)">
+<rect id="shape" width="24" height="24" fill="white" style="fill:white;fill-opacity:1;"/>
+<rect id="shape_2" x="16.5" width="7.5" height="24" fill="#E3283E" style="fill:#E3283E;fill:color(display-p3 0.8902 0.1569 0.2431);fill-opacity:1;"/>
+<rect id="shape_3" width="7.5" height="24" fill="#128A60" style="fill:#128A60;fill:color(display-p3 0.0706 0.5412 0.3765);fill-opacity:1;"/>
+<path id="shape_4" fill-rule="evenodd" clip-rule="evenodd" d="M10.2703 11.3247C10.2333 11.0289 9.98088 10.8 9.675 10.8C9.34363 10.8 9.075 11.0686 9.075 11.4C9.075 12.4817 9.65282 13.4635 10.5711 13.9963C10.8577 14.1626 11.2249 14.0651 11.3912 13.7785C11.5575 13.4918 11.46 13.1247 11.1734 12.9584C10.6214 12.6381 10.275 12.0495 10.275 11.4L10.2703 11.3247ZM15.075 11.4C15.075 11.0686 14.8064 10.8 14.475 10.8C14.1436 10.8 13.875 11.0686 13.875 11.4C13.875 12.0219 13.5577 12.5887 13.0431 12.9179C12.7639 13.0964 12.6824 13.4674 12.8609 13.7466C13.0394 14.0258 13.4105 14.1073 13.6896 13.9288C14.5456 13.3813 15.075 12.4355 15.075 11.4Z" fill="#8C9157" style="fill:#8C9157;fill:color(display-p3 0.5490 0.5686 0.3412);fill-opacity:1;"/>
+<ellipse id="shape_5" cx="12.075" cy="10.8" rx="1.2" ry="1.8" fill="#C59262" style="fill:#C59262;fill:color(display-p3 0.7725 0.5725 0.3843);fill-opacity:1;"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_1003">
+<rect width="24" height="24" rx="3" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

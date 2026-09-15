@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+credentials.json
+secrets/
+*.secret
+
+# TypeScript / Vite
+*.tsbuildinfo
+.vite/
+
+# Originales de assets en alta (no se publican)
+.assets-originals/
+
+# Cache interno de Atlas
+.atlas-cache/
