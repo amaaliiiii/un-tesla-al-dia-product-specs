@@ -1507,3 +1507,11 @@ button.rh-search{border:0}
 .gate-card input:focus{outline:none;border-color:#7a4cf4;background:#fff}
 .gate-card em{font-size:12px;font-style:normal;color:#c43333}
 .gate-card button{height:44px;border:0;border-radius:1000px;background:#000;color:#fff;font-size:14px;font-weight:650;font-family:inherit;cursor:pointer}
+
+/* Render de tags en home: la marca vive en la tarjeta, no en el banner */
+.show-hotspots .rh-tagfocus .rh-banner.is-hotspot:after{display:none}
+.show-hotspots .rh-tagfocus .rh-banner .hot-badge{display:none}
+.rh-store.is-hotspot{position:relative}
+.show-hotspots .rh-store.is-hotspot:after{inset:-4px auto auto -4px;width:242px;height:160px}
+.show-hotspots .rh-store.peek.is-hotspot:after{width:98px}
+.show-hotspots .rh-store.is-hotspot .hot-badge{top:-8px;left:-8px}

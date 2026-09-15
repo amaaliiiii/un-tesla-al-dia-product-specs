@@ -1529,7 +1529,7 @@ function HomeBannerFace({ variant, extraTicket, tickets, size, liveTimer, hot = 
   </button>;
 }
 
-function HomeRappiScreen({ next, variant = "default", size = "large", onRestaurants, onSearch, onTickets, onStores, onResults, extraTicket, tickets, storeTags, single, timerCta }: { next: () => void; variant?: HomeVariant; size?: BannerSize; onRestaurants?: () => void; onSearch?: () => void; onTickets?: () => void; onStores?: () => void; onResults?: () => void; extraTicket?: TicketInfo | null; tickets?: boolean; storeTags?: boolean; single?: boolean; timerCta?: boolean }) {
+function HomeRappiScreen({ next, variant = "default", size = "large", onRestaurants, onSearch, onTickets, onStores, onResults, extraTicket, tickets, storeTags, single, timerCta, navHot = true, tagFocus = false }: { next: () => void; variant?: HomeVariant; size?: BannerSize; onRestaurants?: () => void; onSearch?: () => void; onTickets?: () => void; onStores?: () => void; onResults?: () => void; extraTicket?: TicketInfo | null; tickets?: boolean; storeTags?: boolean; single?: boolean; timerCta?: boolean; navHot?: boolean; tagFocus?: boolean }) {
   const track = useRef<HTMLDivElement>(null);
   const startX = useRef(0);
   const [page, setPage] = useState(0);
@@ -1552,10 +1552,10 @@ function HomeRappiScreen({ next, variant = "default", size = "large", onRestaura
   };
   const face = (v: HomeVariant, liveTimer?: boolean, dest: "hub" | "tickets" | "stores" | "results" = "hub", hot = 1) => <HomeBannerFace variant={v} extraTicket={extraTicket} tickets={tickets || liveCarousel} size={size} liveTimer={liveTimer} hot={hot} onPointerDown={e => { startX.current = e.clientX; }} onClick={go(dest)} />;
   const nocov = variant === "noCoverage" || variant === "noStores";
-  const hideExplore = nocov;
+  const hideExplore = nocov || !navHot;
   const restN = ticketsCarousel || liveCarousel || resultsCarousel ? 4 : 2;
   const searchN = ticketsCarousel || liveCarousel || resultsCarousel ? 5 : 3;
-  return <div className="screen rappi-home">
+  return <div className={`screen rappi-home${tagFocus ? " rh-tagfocus" : ""}`}>
     <StatusBar />
     <div className="rh-nav">
       <div className="rh-loc"><span>Casa de Mamá • Calle 92 # 11-72</span><i className="rh-expand"><ChevronDown size={12} /></i></div>
@@ -1590,21 +1590,23 @@ function HomeRappiScreen({ next, variant = "default", size = "large", onRestaura
     <div className="rh-reorder">
       <div className="rh-reorder-h"><b>Cómpralo de nuevo Simón</b><ChevronRight size={16} color="#919aaa" /></div>
       <div className="rh-stores">
-        <div className="rh-store">
+        <div className={`rh-store${tagFocus ? " is-hotspot" : ""}`}>
           <span className="rh-store-photo">
             <img src="assets/figma/home/sbux.png" alt="Starbucks Turbo" />
             {storeTags ? <TeslaTag /> : null}
           </span>
           <b>Starbucks Turbo</b>
           <small>10 min · 4.8</small>
+          {tagFocus ? <HotNum n={1} /> : null}
         </div>
-        <div className="rh-store peek">
+        <div className={`rh-store peek${tagFocus ? " is-hotspot" : ""}`}>
           <span className="rh-store-photo">
             <img src="assets/figma/home/pumpkin.png" alt="Mora Mora Turbo" />
             {storeTags ? <TeslaTag /> : null}
           </span>
           <b>Mora Mora Turbo</b>
           <small>10 min · 4.8</small>
+          {tagFocus ? <HotNum n={1} /> : null}
         </div>
       </div>
     </div>
@@ -2876,7 +2878,7 @@ function ScreenRenderer({ step, next, prev, goTo, goBack, jumpKind, openStores, 
   const shownHome = extraTicket && (homeVar === "default" || homeVar === "empty") ? "tickets" : homeVar;
   const homeTickets = !!step.props?.live || !!step.props?.tickets || !!extraTicket;
   switch (step.kind) {
-    case "home2": return <HomeRappiScreen next={shownHome === "winner" ? () => { if (!goTo("prevresults")) next(); } : toHub} variant={shownHome} size={step.props?.small ? "small" : "large"} onRestaurants={() => { if (!goTo("rest")) onRestaurants?.(); }} onSearch={() => { if (!goTo("search")) onSearch?.(); }} onTickets={toTickets} onStores={openStores} onResults={() => { if (!goTo("prevresults")) openResults(); }} extraTicket={extraTicket} tickets={homeTickets} storeTags={!!step.props?.tags && !step.props?.soldOut} single={!!step.props?.single} timerCta={!!step.props?.timerCta} />;
+    case "home2": return <HomeRappiScreen next={shownHome === "winner" ? () => { if (!goTo("prevresults")) next(); } : toHub} variant={shownHome} size={step.props?.small ? "small" : "large"} onRestaurants={() => { if (!goTo("rest")) onRestaurants?.(); }} onSearch={() => { if (!goTo("search")) onSearch?.(); }} onTickets={toTickets} onStores={openStores} onResults={() => { if (!goTo("prevresults")) openResults(); }} extraTicket={extraTicket} tickets={homeTickets} storeTags={!!step.props?.tags && !step.props?.soldOut} single={!!step.props?.single} timerCta={!!step.props?.timerCta} navHot={!step.props?.single && !step.props?.tags} tagFocus={!!step.props?.tags} />;
     case "intro": return <IntroScreen onKnowMore={toHub} onGotIt={() => { if (!goTo("home2") && !goTo("home")) next(); }} openLegal={openLegal} />;
     case "winintro": return <WinnerInappScreen onClose={() => { if (!goTo("home2") && !goTo("home")) next(); }} />;
     case "rest": return <RestaurantsHome back={() => backTo("home2")} openHub={toHub} openStore={openStore} openSearch={() => { if (!goTo("search")) onSearch?.(); }} soldOut={!!step.props?.soldOut} focus={step.props?.focus as RestFocus | undefined} />;
