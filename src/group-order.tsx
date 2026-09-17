@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import { ArrowLeft, ArrowRight, Check, ChevronRight, Eye, EyeOff, Menu, X } from "lucide-react";
 import "./group-order.css";
 import { FIGMA_FILE, FLOWS, type GroupOrderFlow, type GroupOrderScreen } from "./group-order-data";
+import { resolveGoScreen } from "./go-map";
+import { renderGoScreen } from "./go-screens";
 
 const KEY = "PremioDiario2026MX";
 const STORE = "tesla-spec-access";
@@ -61,23 +63,6 @@ function writeHash(flow: GroupOrderFlow, screen: GroupOrderScreen) {
   if (location.hash !== next) history.replaceState(null, "", next);
 }
 
-function isPhoneFrame(screen: GroupOrderScreen) {
-  return screen.width <= 420;
-}
-
-function FigmaScreen({ screen }: { screen: GroupOrderScreen }) {
-  const imgH = Math.round(375 * (screen.height / screen.width));
-  return <img
-    className="figma-phone"
-    src={screen.src}
-    alt={screen.figmaName}
-    width={375}
-    height={imgH}
-    style={{ width: 375, height: imgH }}
-    draggable={false}
-  />;
-}
-
 function App() {
   const initial = parseHash();
   const [flowIndex, setFlowIndex] = useState(initial.flow);
@@ -87,7 +72,7 @@ function App() {
 
   const flow = FLOWS[flowIndex];
   const step = flow.screens[stepIndex];
-  const phone = isPhoneFrame(step);
+  const resolved = useMemo(() => resolveGoScreen(flow, step), [flow, step]);
 
   useEffect(() => {
     const apply = () => {
@@ -129,7 +114,7 @@ function App() {
       <div className="brand">
         <div>
           <b>Group Order ID</b>
-          <span>INI-11230 · pantallas de Figma 2nd review, pixel-perfect</span>
+          <span>INI-11230 · pantallas reconstruidas en HTML, como Tesla</span>
         </div>
       </div>
       <div className="header-actions">
@@ -186,43 +171,40 @@ function App() {
             </button>)}
           </div>
 
-          {phone
-            ? <div className="phone-slot">
-                <div className="phone-shell">
-                  <div className="phone-buttons" />
-                  <div className="phone-screen is-figma">
-                    <FigmaScreen screen={step} />
-                  </div>
-                  <div className="home-indicator" />
-                </div>
+          <div className="phone-slot">
+            <div className="phone-shell">
+              <div className="phone-buttons" />
+              <div className="phone-screen">
+                {renderGoScreen(resolved, next)}
               </div>
-            : <div className="canvas-slot">
-                <div className="canvas-shell">
-                  <img src={step.src} alt={step.figmaName} draggable={false} />
-                </div>
-              </div>}
+              <div className="home-indicator" />
+            </div>
+          </div>
 
           <div className="explanation">
             <div className="explanation-top">
               <span>PANTALLA ACTUAL</span>
-              <b>{step.title}</b>
+              <b>{resolved.panelTitle}</b>
             </div>
             <div className="progress"><i style={{ width: `${progress}%` }} /></div>
-            <div className="action-card">
-              <div className="tap-icon"><span>●</span></div>
-              <div>
-                <b>{step.figmaName}</b>
-                <p>{step.note} Esta captura es el frame de Figma, no una UI reconstruida.</p>
-              </div>
-            </div>
+            {resolved.hotspots.length
+              ? <ol className="action-list">{resolved.hotspots.map((h, i) =>
+                  <li className="action-item" key={h.label}><span className="num">{i + 1}</span><div><b>{h.label}</b><small>{h.desc}</small></div></li>)}
+                </ol>
+              : <div className="action-card">
+                  <div className="tap-icon"><span>●</span></div>
+                  <div>
+                    <b>{step.figmaName}</b>
+                    <p>{resolved.note} Corte de diseño: no hay zonas activas de app.</p>
+                  </div>
+                </div>}
             <p className="figma-meta">
-              {step.width}×{step.height} · {step.nodeId}
+              {step.width}×{step.height} · {step.nodeId} · HTML
               {" · "}
               <a href={figmaUrl(step.nodeId)} target="_blank" rel="noreferrer">Abrir en Figma</a>
             </p>
-            <p className="spec-note">
-              Tabs = flujos de la sección 2nd review. Multi-formato no tiene frame en este archivo, así que no hay tab.
-            </p>
+            {resolved.kind !== "cover" && <p className="spec-note">{resolved.note}</p>}
+            <p className="spec-note">Tabs = flujos de la sección 2nd review. Multi-formato no tiene frame en este archivo, así que no hay tab.</p>
             <p className="disclaimer">Lo que no está marcado en morado, es solo informativo.</p>
             <div className="nav-buttons">
               <button type="button" onClick={prev} disabled={stepIndex === 0}><ArrowLeft />Anterior</button>

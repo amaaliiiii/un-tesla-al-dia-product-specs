@@ -1,13 +1,13 @@
 # Un Tesla al día · Product specs
 
-Webviews de product spec. El template visual (header, aside de flujos, teléfono, panel de explicación) vive en este repo. **Un Tesla al día** reconstruye las pantallas en React. **Group Order ID** muestra los frames reales de Figma.
+Webviews de product spec. El chrome (header, aside de flujos, teléfono, panel de explicación, hotspots) vive en este repo. **Un Tesla al día** y **Group Order ID** reconstruyen cada pantalla en HTML/React — no son `<img>` de un mock.
 
 ## Specs
 
 | Spec | Entrada | Qué ves |
 | --- | --- | --- |
 | Un Tesla al día | `index.html` | UI interactiva reconstruida |
-| Group Order ID (INI-11230) | `group-order.html` | 4 flujos de Figma *2nd review*, cada `Flow N-n` como PNG del frame |
+| Group Order ID (INI-11230) | `group-order.html` | 4 flujos de Figma *2nd review*. Cada `Flow N-n` es markup (layout, tipo, color, componentes) |
 
 ## Cómo abrir
 
@@ -21,7 +21,7 @@ npx vite --port 4871 --host 127.0.0.1
 
 Clave de acceso (la misma en ambos): `PremioDiario2026MX`
 
-Group Order también acepta hash: `#flujo-1/15` abre Flujo 1, pantalla Flow 1-15.
+Group Order acepta hash: `#flujo-1/15` abre Flujo 1, pantalla Flow 1-15.
 
 ## Group Order — Figma
 
@@ -32,6 +32,4 @@ Archivo [Group Order ID](https://www.figma.com/design/NialMl3AkkpfNy6UxQr0h2/Gro
 3. Flujo 3 · Turbo Search+Retailers (35)
 4. Flujo 4 · Retail+Retail (38)
 
-No hay tab de multi-formato: ese caso no tiene frame en el archivo.
-
-Capturas en `public/assets/group-order/`.
+Las PNGs de Figma son referencia de diseño, no el renderer. Tabs = Flujo 1–4. Multi-formato no tiene frame en este archivo, así que no hay tab.

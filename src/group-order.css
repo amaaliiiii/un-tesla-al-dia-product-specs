@@ -1,39 +1,5 @@
 @import "./styles.css";
 
-.phone-screen.is-figma {
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: #111;
-  overscroll-behavior: contain;
-}
-.phone-screen.is-figma::-webkit-scrollbar { width: 0; }
-
-.figma-phone {
-  display: block;
-  vertical-align: top;
-  background: #fff;
-}
-
-.canvas-slot {
-  flex: 0 0 auto;
-  position: sticky;
-  top: 96px;
-  max-width: min(640px, calc(100vw - 40px));
-}
-.canvas-shell {
-  background: #fff;
-  border: 1px solid #e1e1dd;
-  border-radius: 18px;
-  box-shadow: 0 18px 40px rgba(0,0,0,.08);
-  overflow: auto;
-  max-height: calc(100vh - 140px);
-}
-.canvas-shell img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 .figma-meta {
   margin: 12px 2px 0;
   font-size: 11px;
