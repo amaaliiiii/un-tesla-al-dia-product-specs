@@ -5,17 +5,25 @@ import "./group-order.css";
 import { FIGMA_FILE, FLOWS, type GroupOrderFlow, type GroupOrderScreen } from "./group-order-data";
 import { resolveGoScreen } from "./go-map";
 import { renderGoScreen } from "./go-screens";
+import { Flujo2Slice, FLUJO2_SLICE, isFlujo2Slice, SLICE_HOTSPOTS } from "./flujo2-slice";
 
 function figmaUrl(nodeId: string) {
   return `https://www.figma.com/design/${FIGMA_FILE}/Group-Order-ID?node-id=${nodeId.replace(":", "-")}&m=dev`;
 }
 
+function defaultFlujo2Slice() {
+  const fi = FLOWS.findIndex(f => f.id === "flujo-2");
+  const flow = FLOWS[fi] ?? FLOWS[0];
+  const si = flow.screens.findIndex(s => s.nodeId === "297:84565");
+  return { flow: Math.max(0, fi), step: Math.max(0, si) };
+}
+
 function parseHash(): { flow: number; step: number } {
   const id = location.hash.replace(/^#/, "");
   const m = id.match(/^(flujo-(\d+))(?:\/(\d+))?$/);
-  if (!m) return { flow: 0, step: 0 };
+  if (!m) return defaultFlujo2Slice();
   const fi = FLOWS.findIndex(f => f.id === m[1] || f.figma === Number(m[2]));
-  if (fi < 0) return { flow: 0, step: 0 };
+  if (fi < 0) return defaultFlujo2Slice();
   const n = m[3] ? Number(m[3]) : 1;
   const si = FLOWS[fi].screens.findIndex(s => s.n === n);
   return { flow: fi, step: si >= 0 ? si : 0 };
@@ -53,12 +61,37 @@ function App() {
 
   const chooseFlow = (i: number) => {
     setFlowIndex(i);
-    setStepIndex(0);
+    if (FLOWS[i].id === "flujo-2") {
+      const si = FLOWS[i].screens.findIndex(s => s.nodeId === "297:84565");
+      setStepIndex(si >= 0 ? si : 0);
+    } else {
+      setStepIndex(0);
+    }
     setMobileMenu(false);
   };
   const jumpTo = (i: number) => setStepIndex(i);
-  const next = () => setStepIndex(i => (i < flow.screens.length - 1 ? i + 1 : 0));
-  const prev = () => setStepIndex(i => Math.max(0, i - 1));
+  const goToNode = (nodeId: string) => {
+    const si = flow.screens.findIndex(s => s.nodeId === nodeId);
+    if (si >= 0) setStepIndex(si);
+  };
+  const next = () => {
+    if (isFlujo2Slice(step.nodeId)) {
+      const i = FLUJO2_SLICE.indexOf(step.nodeId as typeof FLUJO2_SLICE[number]);
+      const nxt = FLUJO2_SLICE[i + 1];
+      if (nxt) goToNode(nxt);
+      return;
+    }
+    setStepIndex(i => (i < flow.screens.length - 1 ? i + 1 : 0));
+  };
+  const prev = () => {
+    if (isFlujo2Slice(step.nodeId)) {
+      const i = FLUJO2_SLICE.indexOf(step.nodeId as typeof FLUJO2_SLICE[number]);
+      const prv = FLUJO2_SLICE[i - 1];
+      if (prv) goToNode(prv);
+      return;
+    }
+    setStepIndex(i => Math.max(0, i - 1));
+  };
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -71,6 +104,19 @@ function App() {
 
   const progress = useMemo(() => ((stepIndex + 1) / flow.screens.length) * 100, [flow, stepIndex]);
   const stageKicker = `FLUJO ${String(flow.figma).padStart(2, "0")}`;
+  const sliceHotspots = isFlujo2Slice(step.nodeId) ? (SLICE_HOTSPOTS[step.nodeId] ?? []) : resolved.hotspots;
+  const panelTitle = isFlujo2Slice(step.nodeId)
+    ? ({
+      "297:84565": "Turbo más completo",
+      "297:84354": "Turbo · home",
+      "297:84219": "Frutas y verduras",
+      "259:77075": "Canasta · 2 bodegas",
+      "297:89649": "ETA por entrega",
+      "272:59663": "Terminar y pagar",
+      "299:90348": "Propina por entrega",
+      "300:90667": "Creando pedido",
+    }[step.nodeId] ?? resolved.panelTitle)
+    : resolved.panelTitle;
 
   return <main className={hotspots ? "show-hotspots" : ""}>
     <header className="workspace-header">
@@ -138,7 +184,9 @@ function App() {
             <div className="phone-shell">
               <div className="phone-buttons" />
               <div className="phone-screen">
-                {renderGoScreen(resolved, next)}
+                {isFlujo2Slice(step.nodeId)
+                  ? <Flujo2Slice nodeId={step.nodeId} goTo={goToNode} />
+                  : renderGoScreen(resolved, next)}
               </div>
               <div className="home-indicator" />
             </div>
@@ -147,11 +195,11 @@ function App() {
           <div className="explanation">
             <div className="explanation-top">
               <span>PANTALLA ACTUAL</span>
-              <b>{resolved.panelTitle}</b>
+              <b>{panelTitle}</b>
             </div>
             <div className="progress"><i style={{ width: `${progress}%` }} /></div>
-            {resolved.hotspots.length
-              ? <ol className="action-list">{resolved.hotspots.map((h, i) =>
+            {sliceHotspots.length
+              ? <ol className="action-list">{sliceHotspots.map((h, i) =>
                   <li className="action-item" key={h.label}><span className="num">{i + 1}</span><div><b>{h.label}</b><small>{h.desc}</small></div></li>)}
                 </ol>
               : <div className="action-card">
