@@ -16,10 +16,8 @@ npm install
 npx vite --port 4871 --host 127.0.0.1
 ```
 
-- Tesla: http://127.0.0.1:4871/
-- Group Order: http://127.0.0.1:4871/group-order.html
-
-Clave de acceso (la misma en ambos): `PremioDiario2026MX`
+- Tesla: http://127.0.0.1:4871/ (clave: `PremioDiario2026MX`)
+- Group Order: http://127.0.0.1:4871/group-order.html (sin clave)
 
 Group Order acepta hash: `#flujo-1/15` abre Flujo 1, pantalla Flow 1-15.
 

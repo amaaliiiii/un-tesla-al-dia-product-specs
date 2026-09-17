@@ -6,43 +6,6 @@ import { FIGMA_FILE, FLOWS, type GroupOrderFlow, type GroupOrderScreen } from ".
 import { resolveGoScreen } from "./go-map";
 import { renderGoScreen } from "./go-screens";
 
-const KEY = "PremioDiario2026MX";
-const STORE = "tesla-spec-access";
-
-function AccessGate({ children }: { children: React.ReactNode }) {
-  const [ok, setOk] = useState(() => {
-    try { return sessionStorage.getItem(STORE) === KEY; } catch { return false; }
-  });
-  const [value, setValue] = useState("");
-  const [error, setError] = useState(false);
-
-  if (ok) return <>{children}</>;
-
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (value.trim() !== KEY) { setError(true); return; }
-    try { sessionStorage.setItem(STORE, KEY); } catch { /* sesión privada */ }
-    setOk(true);
-  };
-
-  return <div className="gate">
-    <form className="gate-card" onSubmit={submit}>
-      <b>Group Order ID</b>
-      <span>INI-11230 · Figma 2nd review, pantalla por pantalla</span>
-      <input
-        type="password"
-        autoFocus
-        placeholder="Clave de acceso"
-        value={value}
-        onChange={e => { setValue(e.target.value); setError(false); }}
-        aria-label="Clave de acceso"
-      />
-      {error && <em>Clave incorrecta</em>}
-      <button type="submit">Entrar</button>
-    </form>
-  </div>;
-}
-
 function figmaUrl(nodeId: string) {
   return `https://www.figma.com/design/${FIGMA_FILE}/Group-Order-ID?node-id=${nodeId.replace(":", "-")}&m=dev`;
 }
@@ -218,4 +181,4 @@ function App() {
   </main>;
 }
 
-createRoot(document.getElementById("root")!).render(<AccessGate><App /></AccessGate>);
+createRoot(document.getElementById("root")!).render(<App />);
