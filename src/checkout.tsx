@@ -638,8 +638,8 @@ export function RestaurantsHome({ back, openHub, openStores, openStore, openSear
         </button> : <span className={`rest-chip${c.on ? " on" : ""}`} key={c.label}><img src={c.img} alt="" width={24} height={24} />{c.label}</span>)}
       </div>)}
     </div>
-    <button className={`rh-banner rh-banner-sm rest-banner${hot("banner")}`} onClick={openHub} aria-label="Próximo sorteo cierra en">
-      <small>Próximo sorteo cierra en:</small>
+    <button className={`rh-banner rh-banner-sm rest-banner${hot("banner")}`} onClick={openHub} aria-label="La participación cierra en">
+      <small>La participación cierra en:</small>
       <BannerClock />
       <div className="rh-car-clip">
         <img className="rh-car" src="assets/figma/home/tesla-a.png" alt="" width={183} height={103} />
