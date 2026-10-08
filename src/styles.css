@@ -658,8 +658,8 @@ button.sd-offer{cursor:pointer}
 
 /* Intro (462:61969) */
 .intro2{background:#fff;color:#000;display:flex;flex-direction:column;height:100%}
-.intro2-body{flex:1;display:flex;flex-direction:column;align-items:center;padding:6px 24px 0;overflow:hidden}
-.intro2-title{font-size:32px;line-height:1.06;letter-spacing:-1px;text-align:center;font-weight:700;margin:12px 0 0}
+.intro2-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 24px 0;overflow:hidden}
+.intro2-title{font-size:32px;line-height:1.06;letter-spacing:-1px;text-align:center;font-weight:700;margin:0}
 .intro2-car{width:310px;max-width:92%;margin:2px 0;object-fit:contain}
 .intro2-word{width:94px;height:auto;margin:8px 0 20px}
 .intro2-label{font-size:16px;font-weight:700;margin:0 0 12px}
