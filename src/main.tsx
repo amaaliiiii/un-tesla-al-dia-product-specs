@@ -559,7 +559,7 @@ const flows: Flow[] = [
     description: "Banner chico del concurso dentro del home de restaurantes.",
     icon: <Home size={17} />,
     steps: [
-      { title: "Único estado · timer", kind: "rest", note: "", props: { focus: "banner" }, hotspots: [{ label: "Banner del concurso", desc: "Próximo sorteo cierra en: con el contador. Toda la imagen abre el hub. No tiene otros estados." }] },
+      { title: "Único estado · timer", kind: "rest", note: "", props: { focus: "banner" }, hotspots: [{ label: "Banner del concurso", desc: "La participación cierra en: con el contador. Toda la imagen abre el hub. No tiene otros estados." }] },
     ],
   },
   {
@@ -796,7 +796,7 @@ const flows: Flow[] = [
       { title: "Grande · en vivo", kind: "home2", note: "", props: { live: true }, hotspots: homeLiveNav },
       { title: "Grande · resultados", kind: "home2", note: "", props: { results: true }, hotspots: homeResultsNav },
       { title: "Grande · primer sorteo", kind: "home2", note: "", props: { first: true }, hotspots: [{ label: "Banner", desc: "Próximo / primer sorteo." }] },
-      { title: "Grande · último sorteo", kind: "home2", note: "", props: { last: true }, hotspots: [{ label: "Banner", desc: "Próximo sorteo cierra en:" }] },
+      { title: "Grande · último sorteo", kind: "home2", note: "", props: { last: true }, hotspots: [{ label: "Banner", desc: "La participación cierra en:" }] },
       { title: "Grande · ganador", kind: "home2", note: "", props: { winner: true }, hotspots: [{ label: "Banner", desc: "¡Ganaste el Tesla del sorteo N°5!" }] },
       { title: "Grande · agotado", kind: "home2", note: "", props: { soldOut: true }, hotspots: [{ label: "Banner", desc: "Se terminaron los boletos." }] },
       { title: "Grande · sin cobertura", kind: "home2", note: "", props: { noCoverage: true }, hotspots: [{ label: "Banner", desc: "Sin tiendas en esta dirección." }] },
@@ -806,7 +806,7 @@ const flows: Flow[] = [
       { title: "Chico · en vivo", kind: "home2", note: "", props: { live: true, small: true }, hotspots: [{ label: "Banner chico", desc: "¡El sorteo de hoy está en curso! Abre el hub." }] },
       { title: "Chico · resultados", kind: "home2", note: "", props: { results: true, small: true }, hotspots: [{ label: "Banner chico", desc: "Resultados último sorteo." }] },
       { title: "Chico · primer sorteo", kind: "home2", note: "", props: { first: true, small: true }, hotspots: [{ label: "Banner chico", desc: "Próximo / primer sorteo." }] },
-      { title: "Chico · último", kind: "home2", note: "", props: { last: true, small: true }, hotspots: [{ label: "Banner chico", desc: "Próximo sorteo cierra en:" }] },
+      { title: "Chico · último", kind: "home2", note: "", props: { last: true, small: true }, hotspots: [{ label: "Banner chico", desc: "La participación cierra en:" }] },
       { title: "Chico · ganador", kind: "home2", note: "", props: { winner: true, small: true }, hotspots: [{ label: "Banner chico", desc: "¡Ganaste el Tesla del sorteo N°5!" }] },
       { title: "Chico · agotado", kind: "home2", note: "", props: { soldOut: true, small: true }, hotspots: [{ label: "Banner chico", desc: "Se terminaron los boletos." }] },
       { title: "Chico · sin cobertura", kind: "home2", note: "", props: { noCoverage: true, small: true }, hotspots: [{ label: "Banner chico", desc: "Aún no hay tiendas en esta dirección." }] },
@@ -821,7 +821,7 @@ const flows: Flow[] = [
     steps: [
       { title: "Campaña activa", kind: "chub", note: "", props: { tickets: true, focus: "header" }, hotspots: [{ label: "Header", desc: "Un Tesla al día con el timer del próximo sorteo y el conteo de Teslas sorteados." }] },
       { title: "Primer sorteo", kind: "chub", note: "", props: { first: true, focus: "header" }, hotspots: [{ label: "Header", desc: "Antes de arrancar la campaña: primer sorteo el 16 de Octubre y aún no hay Teslas sorteados." }] },
-      { title: "Último sorteo", kind: "chub", note: "", props: { last: true, tickets: true, focus: "header" }, hotspots: [{ label: "Header", desc: "Cierre de campaña: último sorteo cierra en y ya sorteamos 40 Teslas." }] },
+      { title: "Último sorteo", kind: "chub", note: "", props: { last: true, tickets: true, focus: "header" }, hotspots: [{ label: "Header", desc: "Cierre de campaña: la participación cierra en y ya sorteamos 40 Teslas." }] },
       { title: "En vivo", kind: "chub", note: "", props: { live: true, tickets: true, focus: "header" }, hotspots: [{ label: "Header", desc: "Con el sorteo en curso el header se mantiene igual; el acceso al vivo vive en el render de resultados." }] },
       { title: "Agotado", kind: "chub", note: "", props: { soldOut: true, tickets: true, focus: "header" }, hotspots: [{ label: "Header", desc: "Se terminaron los boletos del día: el header cambia el copy y quita el CTA." }] },
       { title: "Campaña terminada", kind: "chub", note: "", props: { ended: true, tickets: true, focus: "header" }, hotspots: [{ label: "Header", desc: "Sin timer y con ¡Ya sorteamos este Tesla!: los sorteos han terminado." }] },
@@ -1085,8 +1085,8 @@ function HubScreen({ next, props }: { next: () => void; props?: Step["props"] })
     <TopBar title="Un Tesla al día" />
     <div className="hero">
       <TeslaVisual />
-      <div className="hero-copy"><span>UN TESLA AL DÍA</span><h1>Todos los días.<br />Por el resto del año.</h1></div>
-      <div className="countdown"><small>Próximo sorteo cierra en:</small><Timer /></div>
+      <div className="hero-copy"><span>UN TESLA AL DÍA</span><h1>Todos los días.</h1></div>
+      <div className="countdown"><small>La participación cierra en:</small><Timer /></div>
     </div>
     <div className="hub-body">
       <div className="segmented"><button className="active">Mis boletos</button><button>Resultados</button><button>Cómo funciona</button></div>
@@ -1410,7 +1410,7 @@ function ResultsWinTicket() {
 
 function HomeBannerFace({ variant, extraTicket, tickets, size, liveTimer, hot = 1, onPointerDown, onClick }: { variant: HomeVariant; extraTicket?: TicketInfo | null; tickets?: boolean; size: BannerSize; liveTimer?: boolean; hot?: number; onPointerDown: (e: React.PointerEvent) => void; onClick: (e: React.MouseEvent) => void }) {
   const small = size === "small";
-  const clockLabel = "Próximo sorteo cierra en:";
+  const clockLabel = "La participación cierra en:";
   if (small) {
     if (variant === "winner") {
       return <button className="rh-banner rh-banner-sm rh-banner-winner is-hotspot" onPointerDown={onPointerDown} onClick={onClick} aria-label="Ganaste el Tesla">
@@ -1433,7 +1433,7 @@ function HomeBannerFace({ variant, extraTicket, tickets, size, liveTimer, hot = 
           <img className="rh-word" src="assets/figma/home/nocov-word.svg" alt="" width={43} height={6} />
         </div>
       </> : variant === "soldOut" ? <>
-        <small>Próximo sorteo cierra en:</small>
+        <small>La participación cierra en:</small>
         <BannerClock />
         <span className="rh-sold-bar">Se terminaron los boletos para el sorteo de hoy</span>
       </> : variant === "tickets" ? <>
@@ -1549,7 +1549,7 @@ function HomeBannerFace({ variant, extraTicket, tickets, size, liveTimer, hot = 
     return <button className="rh-banner rh-banner-sold is-hotspot" onPointerDown={onPointerDown} onClick={onClick} aria-label="Se terminaron los boletos">
       <b>Un Tesla al día. Todos los días.</b>
       <i className="rh-title-chevron"><ChevronRight size={16} /></i>
-      <small>Próximo sorteo cierra en:</small>
+      <small>La participación cierra en:</small>
       <BannerClock />
       <span className="rh-sold-bar">Se terminaron los boletos para el sorteo de hoy</span>
       <div className="rh-car-clip">
@@ -1690,10 +1690,10 @@ function WinnerInappScreen({ onClose }: { onClose: () => void }) {
 function IntroScreen({ onKnowMore, onGotIt, openLegal }: { onKnowMore: () => void; onGotIt: () => void; openLegal?: () => void }) {
   return <div className="screen intro2"><StatusBar />
     <div className="intro2-body">
-      <h1 className="intro2-title">Un Tesla al día.<br />Todos los días.<br />Por el resto del año.</h1>
+      <h1 className="intro2-title">Un Tesla al día.<br />Todos los días.</h1>
       <img className="intro2-car" src="assets/figma/tesla-white-side.png" alt="Tesla Model Y" />
       <img className="intro2-word" src="assets/figma/tesla-wordmark.svg" alt="TESLA" />
-      <p className="intro2-label">Próximo sorteo cierra en:</p>
+      <p className="intro2-label">La participación cierra en:</p>
       <CountdownBoxes />
       <button className="intro2-bases" onClick={openLegal}>Consulta las bases</button>
     </div>
@@ -1858,7 +1858,7 @@ function CampaignHubScreen({ next, prev, openStores, openTickets, openTicket, op
     return extraTicket && sorteoFilter === "manana" ? [extraTicket, ...base] : base;
   })();
   const hubEmpty = showTickets && filteredHubTickets.length === 0;
-  const countdownLabel = v === "last" ? "Últimos sorteo cierra en:" : "Próximo sorteo cierra en:";
+  const countdownLabel = "La participación cierra en:";
   const teslasDone = v === "last" ? "40 Teslas" : "5 Teslas";
   const resultsSub = v === "first" ? "Primer sorteo el 16 de Octubre" : v === "ended" ? "¡Ya sorteamos este Tesla!" : <>Ya sorteamos <b style={{ display: "inline", fontSize: 12 }}>{teslasDone}</b></>;
   const scroller = useRef<HTMLDivElement>(null);
@@ -1887,7 +1887,7 @@ function CampaignHubScreen({ next, prev, openStores, openTickets, openTicket, op
         <button className={`chub-how${noF ? " is-hotspot" : ""}`} onClick={next}>¿Cómo funciona?{noF && <HotNum n={2} />}</button>
       </div>
       <div className="chub-carwrap"><img className="chub-car" src="assets/figma/hub-tesla-front.png" alt="Tesla Model Y" /></div>
-      <h1 className="chub-title">Un Tesla al día. Todos los días. Por el resto del año.</h1>
+      <h1 className="chub-title">Un Tesla al día.<br />Todos los días.</h1>
       {!ended && <p className="chub-label">{countdownLabel}</p>}
       {!ended && <CountdownBoxes dark />}
       {ended ? <div className="chub-sold">
@@ -1990,9 +1990,9 @@ function MisBoletosScreen({ back, openStores, openTicket, extraTicket, soldOut =
   const copy = soldOut
     ? null
     : landingEmpty && sorteoFilter === "manana"
-      ? "Aún puedes ganar boletos. El sorteo cierra hoy a las XX:XX pm."
+      ? "Aún puedes ganar boletos. La participación cierra hoy a las 23:59."
       : sorteoFilter === "manana"
-        ? "Aún puedes ganar más boletos. El sorteo cierra hoy a las XX:XX pm."
+        ? "Aún puedes ganar más boletos. La participación cierra hoy a las 23:59."
         : liveHoy
           ? "El sorteo está en curso..."
           : sorteoFilter === "hoy"
